@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Page</title>
+    <link rel="stylesheet" type="text/css">
+    <script>
+        function HandleRegistrationResponse(response) {
+            var text = JSON.parse(response);
+            document.getElementById("textResponse").innerHTML = "Response: " + text + "<p>";
+            // Check if the response indicates successful registration
+            if (text === "Registration successful") {
+                // Redirect to another page (e.g., login page)
+                window.location.href = "home.html"; // Redirect to login.html upon successful registration
+            }
+        }
+
+        function SendRegistrationRequest(username, password) {
+            var request = new XMLHttpRequest();
+            request.open("POST", "register.php", true); // Change to the path of your PHP registration script
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    HandleRegistrationResponse(this.responseText);
+                }
+            }
+            // Send form data as URL-encoded string
+            request.send("type=register&uname=" + encodeURIComponent(username) + "&pword=" + encodeURIComponent(password));
+        }
+
+        function SubmitForm() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            SendRegistrationRequest(username, password);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <input type="button" value="Register" onclick="SubmitForm()">
+        </form>
+    </div>
+    <div id="textResponse">
+        Awaiting response...
+    </div>
+</body>
+</html>
+fff 
