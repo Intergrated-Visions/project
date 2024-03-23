@@ -3,10 +3,10 @@
 require_once('rabbitMQLib.inc');
 
 $connectionConfig = [
-    "BROKER_HOST" => "", // ! TO CHANGE
+    "BROKER_HOST" => "rabbitmq.grouse-hake.ts.net", // ! TO CHANGE
     "BROKER_PORT" => 5672,
-    "USER" => "",  // ! TO CHANGE
-    "PASSWORD" => "",  // ! TO CHANGE
+    "USER" => "test",  // ! TO CHANGE
+    "PASSWORD" => "test",  // ! TO CHANGE
     "VHOST" => "",  // ! TO CHANGE
 ];
 
