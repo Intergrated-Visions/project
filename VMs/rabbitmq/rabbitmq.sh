@@ -66,7 +66,7 @@ RABBITMQ_USER="test"
 RABBITMQ_PASS="test"
 
 # Virtual host
-VHOST="bookQuest"
+VHOST="integratedVisions"
 
 # Original exchange and queue
 create_exchange_and_queue "authenticationExchange" "topic" "authenticationQueue"
