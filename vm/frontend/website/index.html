@@ -42,7 +42,20 @@
             // Send form data as URL-encoded string
             request.send("type=login&uname=" + encodeURIComponent(username) + "&pword=" + encodeURIComponent(password));
         }
-
+        
+        function logout(){
+            var request = new XMLHttpRequest();
+            request.open("POST", "/utils/authentication/client.php", true);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.onreadystatechange = function () {
+                console.log(this.responseText, typeof this.responseText)
+                if (this.readyState == 4 && this.status == 200) {
+                    HandleLoginResponse(this.responseText);
+                }
+            }
+            // Send form data as URL-encoded string
+            request.send();
+        }
         function SubmitForm() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
@@ -67,7 +80,8 @@
     </div>
     <div>
         <form action="logout">Logout</form>
-        <input type="button" value="logout" onclick="logoutform()">
+        <input type="button" value="logout" onclick="logoutform()" >
+        window.location.href = "home.html"; // Redirect to home.html upon successful loginß
     </div>
 </body>
 
