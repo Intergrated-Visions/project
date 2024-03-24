@@ -1,0 +1,1 @@
+- [ ] seperate the database and frontend
