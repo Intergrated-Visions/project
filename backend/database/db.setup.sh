@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Check if the db.sql file exists in the current directory
 if [ -f "db.sql" ]; then
     # Run the db.sql file

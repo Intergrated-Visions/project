@@ -4,6 +4,7 @@ require_once('rabbitMQLib.inc');
 
 function doLogin($username,$password)
 {
+  
   // Database connection parameters
   $servername = "localhost"; // Update this to your MySQL server hostname or IP address
   $database = "test123"; // Update this to your MySQL database name
