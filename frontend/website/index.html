@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css">
+    <script>
+        function HandleLoginResponse(response) {
+            var text = JSON.parse(response);
+            console.log(text)
+
+            document.getElementById("textResponse").innerHTML = "Response: " + text + "<p>";
+            // save cookie
+
+            // Check if the response indicates successful login
+            if (text.returnCode == 200) { // Updated condition to match response from login.php
+                // Convert the timestamp string to a Date object
+                var expirationDate = new Date(text.expired_at);
+
+                // Set the cookie
+                document.cookie = "session=" + text.session + "; expires=" + expirationDate.toUTCString() + "; path=/";
+                // Redirect to another page
+                window.location.href = "home.html"; // Redirect to home.html upon successful login
+            }
+            else {
+                window.location.href = "register.html"; // Redirect to home.html upon successful login
+            }
+        }
+
+        function SendLoginRequest(username, password) {
+            var request = new XMLHttpRequest();
+            request.open("POST", "/utils/authentication/client.php", true);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.onreadystatechange = function () {
+                console.log(this.responseText, typeof this.responseText)
+                if (this.readyState == 4 && this.status == 200) {
+                    HandleLoginResponse(this.responseText);
+                }
+            }
+            // Send form data as URL-encoded string
+            request.send("type=login&uname=" + encodeURIComponent(username) + "&pword=" + encodeURIComponent(password));
+        }
+        
+        function logout(){
+            var request = new XMLHttpRequest();
+            request.open("POST", "/utils/authentication/client.php", true);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.onreadystatechange = function () {
+                console.log(this.responseText, typeof this.responseText)
+                if (this.readyState == 4 && this.status == 200) {
+                    HandleLoginResponse(this.responseText);
+                }
+            }
+            // Send form data as URL-encoded string
+            request.send();
+        }
+        function SubmitForm() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            SendLoginRequest(username, password);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Login Page</h2>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <input type="button" value="Login" onclick="SubmitForm()">
+        </form>
+    </div>
+    <div id="textResponse">
+        Awaiting response...
+    </div>
+    <div>
+        <form action="logout">Logout</form>
+        <input type="button" value="logout" onclick="logoutform()" >
+        <!--window.location.href = "home.html"; // Redirect to home.html upon successful loginß-->
+</body>
+
+</html>
