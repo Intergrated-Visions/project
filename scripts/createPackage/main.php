@@ -1,5 +1,8 @@
+#!/usr/bin/php
 <?php
 require_once('rabbitMQLib.inc');
+  
+$BROKER_HOST = "si-developer.grouse-hake.ts.net"; // Default
 
 $connectionConfig = [
     "BROKER_HOST" => "$BROKER_HOST", // ! TO CHANGE
@@ -12,7 +15,17 @@ $connectionConfig = [
 $exchangeQueueConfig = [
     "EXCHANGE_TYPE" => "topic",
     "AUTO_DELETE" => true,
-    "EXCHANGE" => "authenticationExchange", // ! TO CHANGE
-    "QUEUE" => "authenticationQueue" // ! TO CHANGE
+    "EXCHANGE" => "createPackageExchange", // ! TO CHANGE
+    "QUEUE" => "createPackageQueue" // ! TO CHANGE
 ];
 
+$client = new rabbitMQClient($connectionConfig, $exchangeQueueConfig);
+
+$request = array();
+$request['type'] = 'packer';
+
+
+
+
+
+$response = $client->send_request($request);
