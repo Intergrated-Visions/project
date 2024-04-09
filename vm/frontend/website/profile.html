@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #006A4E; /* Peacock color */
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .navbar {
+            text-align: center;
+            position: absolute;
+            top: 20px;
+            width: 100%;
+        }
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #FFF;
+            font-size: 18px;
+        }
+        .container {
+            background: #014040; /* Darker shade of peacock for contrast */
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #222;
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-section, .image-section {
+            flex: 1;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+        input, textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #888;
+            background-color: #004d40;
+            color: white;
+        }
+        input[type="submit"] {
+            background-color: #008080;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #007070;
+        }
+        #profilePicture {
+            display: none;
+        }
+        #profilePicPreview {
+            width: 150px; /* Increased size */
+            height: 150px; /* Increased size */
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid white;
+            display: block;
+            margin-top: 10px;
+            margin-left: auto; /* Aligns the image to the right */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="home.html">Home</a>
+        <a href="calories.html">Calorie</a>
+        <a href="journal.html">Journal</a>
+    </div>
+    <div class="container">
+        <div class="form-section">
+            <h1>Profile</h1>
+            <form>
+                <label for="profilePicture">Profile Picture:</label>
+                <button type="button" onclick="document.getElementById('profilePicture').click()">Upload Picture</button>
+                <input type="file" id="profilePicture" accept="image/*" onchange="previewFile()">
+                
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname">
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age">
+
+                <label for="goal">Goal:</label>
+                <input type="text" id="goal" name="goal">
+
+                <label for="about">About Me:</label>
+                <textarea id="about" name="about" rows="5"></textarea>
+
+                <input type="submit" value="Save Profile">
+            </form>
+        </div>
+        <div class="image-section">
+            <img id="profilePicPreview" src="path/to/default/image.jpg" alt="Profile Picture Preview">
+        </div>
+    </div>
+
+    <script>
+        function previewFile() {
+            const file = document.getElementById('profilePicture').files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                document.getElementById('profilePicPreview').src = reader.result;
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
+
+

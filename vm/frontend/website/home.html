@@ -3,43 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calorie Calculator</title>
-    <style>
-        body {
-            background-color: lightblue; /* Sets the background color to light blue */
-            font-family: Arial, sans-serif; /* Sets a readable, standard font family */
-        }
-        .container {
-            width: 90%; /* Limits the width of the container to 90% */
-            margin: auto; /* Centers the container */
-            overflow: hidden; /* Clears the float */
-        }
-        .navbar {
-            text-align: center; /* Centers the navigation links */
-            margin-bottom: 20px; /* Adds a margin below the navbar */
-        }
-        .navbar a {
-            margin: 0 15px; /* Spacing between navigation links */
-            text-decoration: none; /* Removes underline from links */
-            color: darkblue; /* Sets the color of the links */
-            font-size: 18px; /* Sets the font size of the links */
-        }
-        iframe {
-            display: block; /* Ensures the iframe takes the full block */
-            margin: 20px auto; /* Centers the iframe and adds some margin */
-            border: none; /* Removes the default iframe border */
-        }
-    </style>
+    <title>Dashboard - Welcome</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
     <div class="navbar">
-        <a href="home.html">Home</a>
         <a href="profile.html">Profile</a>
         <a href="journal.html">Journal</a>
+        <a href="calories.html">Calories</a>
     </div>
+    
+    <!-- Container for Dashboard Content -->
     <div class="container">
-        <h1>Calorie Calculator</h1>
-        <iframe src="https://www.mealpro.net/calorie/?color=232323" frameborder="0" width="800" height="1000" style="max-width: 100%;"></iframe>
+        <h1>Welcome to Your Dashboard!</h1>
+        <p>This is your dashboard welcome page. You can customize it further to display relevant information or links.</p>
+        <p>Feel free to explore the features of your dashboard and manage your tasks, settings, etc.</p>
+        <a href="home.html" class="logout-btn">Logout</a>
     </div>
 </body>
 </html>

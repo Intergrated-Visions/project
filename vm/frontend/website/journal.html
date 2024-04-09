@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #006A4E; /* Peacock color */
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh; /* Ensures page fills the viewport height */
+            width: 70%; /* Matches the profile page width */
+            margin: auto;
+        }
+        .navbar {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #FFF;
+            font-size: 18px;
+        }
+        #profilePic {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #FFF;
+        }
+        .journal-entries {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .entry {
+            background: #008080;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .entry:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .entry time {
+            font-size: 12px;
+            color: #E6E6FA;
+        }
+        .entry p {
+            margin: 5px 0;
+        }
+        .entry button {
+            position: absolute;
+            top: 5px;
+            background: #cc0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            right: 5px;
+        }
+        .edit-btn {
+            right: 70px;
+        }
+        textarea {
+            width: 98%;
+            height: 100px;
+            margin-bottom: 10px;
+            background-color: #014040;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4cae4c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #408c40;
+        }
+    </style>
+</head>
+<body>
+    <div id="profilePic" style="background-image: url('default-profile.jpg');"></div>
+    <div class="navbar">
+        <a href="home.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="calories.html">Calories</a>
+    </div>
+    <div>
+        <textarea placeholder="Write a new journal entry..."></textarea>
+        <button onclick="addEntry()">Add Entry</button>
+    </div>
+    <div class="journal-entries"></div>
+
+    <script>
+        window.onload = function() {
+            loadEntries();
+            loadProfilePic();
+        };
+
+        function loadProfilePic() {
+            var profilePic = localStorage.getItem('profilePic');
+            if (profilePic) {
+                document.getElementById('profilePic').style.backgroundImage = `url(${profilePic})`;
+            }
+        }
+
+        function addEntry() {
+            const container = document.querySelector('.journal-entries');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'entry';
+            const dateTime = new Date();
+            const entryText = document.querySelector('textarea').value;
+            const entryID = dateTime.getTime(); // Unique ID for each entry
+
+            newEntry.innerHTML = `<time>${dateTime.toLocaleString()}</time><p>${entryText}</p>
+                <button class="delete-btn" onclick="deleteEntry('${entryID}')">Delete</button>
+                <button class="edit-btn" onclick="editEntry('${entryID}', this)">Edit</button>`;
+            container.prepend(newEntry);
+            saveEntry(entryID, dateTime.toLocaleString(), entryText);
+            document.querySelector('textarea').value = ''; // Clear the textarea after adding
+        }
+
+        function saveEntry(id, time, text) {
+            const entries = JSON.parse(localStorage.getItem('journalEntries') || '{}');
+            entries[id] = { time, text };
+            localStorage.setItem('journalEntries', JSON.stringify(entries));
+        }
+
+        function loadEntries() {
+            const entries = JSON.parse(localStorage.getItem('journalEntries') || '{}');
+            const container = document.querySelector('.journal-entries');
+            Object.keys(entries).sort().reverse().forEach((id) => {
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'entry';
+                entryDiv.innerHTML = `<time>${entries[id].time}</time><p>${entries[id].text}</p>
+                    <button class="delete-btn" onclick="deleteEntry('${id}')">Delete</button>
+                    <button class="edit-btn" onclick="editEntry('${id}', this)">Edit</button>`;
+                container.appendChild(entryDiv);
+            });
+        }
+
+        function deleteEntry(id) {
+            const entries = JSON.parse(localStorage.getItem('journalEntries'));
+            delete entries[id];
+            localStorage.setItem('journalEntries', JSON.stringify(entries));
+            document.getElementById(id).remove(); // Remove the entry div
+        }
+
+        function editEntry(id, btn) {
+            const entryDiv = btn.parentNode;
+            const p = entryDiv.querySelector('p');
+            const textarea = document.createElement('textarea');
+            textarea.value = p.textContent;
+            p.replaceWith(textarea);
+            btn.textContent = 'Save';
+            btn.onclick = function () {
+                saveEditedEntry(id, textarea.value, entryDiv);
+            };
+        }
+
+        function saveEditedEntry(id, newText, entryDiv) {
+            const p = document.createElement('p');
+            p.textContent = newText;
+            const textarea = entryDiv.querySelector('textarea');
+            textarea.replaceWith(p);
+            const btn = entryDiv.querySelector('.edit-btn');
+            btn.textContent = 'Edit';
+            btn.onclick = function () {
+                editEntry(id, btn);
+            };
+            const entries = JSON.parse(localStorage.getItem('journalEntries'));
+            const time = entries[id].time;
+            entries[id] = { time, text: newText };
+            localStorage.setItem('journalEntries', JSON.stringify(entries));
+        }
+    </script>
+</body>
+</html>
+
