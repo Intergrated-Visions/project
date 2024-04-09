@@ -2,7 +2,7 @@
 
 # Get the full path to the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
-//
+
 # Get the directory name from the full path
 DIR_NAME="$(basename "$SCRIPT_DIR")"
 
