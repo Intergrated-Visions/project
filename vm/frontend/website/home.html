@@ -1,101 +1,22 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Personal Fitness Program Generator</title>
+    <title>Dashboard - Welcome</title>
+   
     <link rel="stylesheet" href="/css/style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #006A4E; /* Peacock color */
-            color: white;
-            margin: 0;
-            padding: 20px;
-        }
-        .navbar {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .navbar a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #FFF;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #008080; /* Lighter shade for contrast */
-        }
-        .navbar a:hover {
-            background-color: #004D40; /* Darker on hover for better visual feedback */
-        }
-        .container {
-            max-width: 800px; /* Ensures text is not too wide for easy reading */
-            margin: auto;
-            text-align: center;
-        }
-        h1, p {
-            margin: 20px 0;
-        }
-        .image-section {
-            margin: 20px 0;
-        }
-        .image-section img {
-            width: 100%; /* Responsive width */
-            height: auto;
-            max-width: 250px; /* Maximum width */
-            border-radius: 10px; /* Rounded corners for aesthetics */
-            margin: 10px;
-        }
-        .image-caption {
-            font-size: 16px;
-            color: #FFFFFF;
-        }
-        a.logout-btn {
-            display: inline-block;
-            margin-top: 20px;
-            color: #FFF;
-            background-color: #cc0000; /* Logout button in red for attention */
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-        a.logout-btn:hover {
-            background-color: #ff0000;
-        }
-    </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <a href="profile.html">Profile</a>
-        <a href="journal.html">Journal</a>
-        <a href="calories.html">Calories</a>
-    </div>
-
-    <!-- Container for Content -->
     <div class="container">
-        <h1>Welcome to Your Personal Fitness Program Generator</h1>
-        <p>The Personal Fitness Program Generator provides personalized fitness and nutrition plans tailored to individual goals, fitness levels, dietary preferences, and restrictions. Leveraging public health and fitness datasets along with nutrition databases, our service empowers you to achieve your health and wellness objectives, whether they are physical or mental.</p>
-        <p>Explore the features of your dashboard and manage your tasks, settings, and more to optimize your personal health journey.</p>
-        
-        <!-- Images Section -->
-        <div class="image-section">
-            <img src="fitness.jpg" alt="Fitness">
-            <p class="image-caption">Tailored Fitness Plans</p>
-        </div>
-        <div class="image-section">
-            <img src="healthy-food.jpg" alt="Healthy Food">
-            <p class="image-caption">Nutrition and Diet Plans</p>
-        </div>
-        <div class="image-section">
-            <img src="mental-health.jpg" alt="Mental Health">
-            <p class="image-caption">Focus on Mental Wellbeing</p>
-        </div>
-
+        <h1>Welcome to Your Dashboard!</h1>
+        <p>This is your dashboard welcome page. You can customize it further to display relevant information or links.</p>
+        <p>Feel free to explore the features of your dashboard and manage your tasks, settings, etc.</p>
         <a href="home.html" class="logout-btn">Logout</a>
+    </div>
+    <div>
+        <form action="logout">Logout</form>
+        <button type="submit" onclick="logout">logout</button>
     </div>
 </body>
 </html>
-
-
