@@ -45,7 +45,7 @@
             display: block;
             margin-top: 20px;
         }
-        input, textarea {
+        input, textarea, select {
             width: calc(100% - 22px);
             padding: 10px;
             margin-top: 5px;
@@ -53,35 +53,42 @@
             background-color: #004d40;
             color: white;
         }
-        input[type="submit"] {
+        input[type="submit"], button {
             background-color: #008080;
             border: none;
             color: white;
             cursor: pointer;
+            margin-top: 10px;
         }
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, button:hover {
             background-color: #007070;
         }
         #profilePicture {
             display: none;
         }
         #profilePicPreview {
-            width: 150px; /* Increased size */
-            height: 150px; /* Increased size */
+            width: 150px;
+            height: 150px;
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid white;
             display: block;
             margin-top: 10px;
-            margin-left: auto; /* Aligns the image to the right */
+            margin-left: auto;
+        }
+        .conversion-output {
+            color: #FFF;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="home.html">Home</a>
-        <a href="calories.html">Calorie</a>
+        <a href="profile.html">Profile</a>
+        <a href="calories.html">Calories</a>
         <a href="journal.html">Journal</a>
+        <a href="recommendations.html">Recommendations</a>
     </div>
     <div class="container">
         <div class="form-section">
@@ -90,18 +97,41 @@
                 <label for="profilePicture">Profile Picture:</label>
                 <button type="button" onclick="document.getElementById('profilePicture').click()">Upload Picture</button>
                 <input type="file" id="profilePicture" accept="image/*" onchange="previewFile()">
-                
+
                 <label for="fullname">Full Name:</label>
                 <input type="text" id="fullname" name="fullname">
 
                 <label for="age">Age:</label>
                 <input type="number" id="age" name="age">
 
-                <label for="goal">Goal:</label>
-                <input type="text" id="goal" name="goal">
+                <label for="heightFeet">Height:</label>
+                <input type="number" id="heightFeet" name="heightFeet" placeholder="Feet" style="width: 49%;">
+                <input type="number" id="heightInches" name="heightInches" placeholder="Inches" style="width: 49%;">
+                <button type="button" onclick="convertHeight()">Convert to cm</button>
+                <div id="heightCm" class="conversion-output"></div>
+
+                <label for="weight">Weight (in pounds):</label>
+                <input type="number" id="weight" name="weight">
+                <button type="button" onclick="convertWeight()">Convert to kg</button>
+                <div id="weightKg" class="conversion-output"></div>
+
+                <label for="goal">Goals:</label>
+                <textarea id="goal" name="goal"></textarea>
+
+                <label for="dietaryRestrictions">Dietary Restrictions:</label>
+                <select id="dietaryRestrictions" name="dietaryRestrictions">
+                    <option value="none">None</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="glutenFree">Gluten-Free</option>
+                    <option value="kosher">Kosher</option>
+                    <option value="halal">Halal</option>
+                    <option value="lowCarb">Low Carb</option>
+                    <option value="dairyFree">Dairy Free</option>
+                </select>
 
                 <label for="about">About Me:</label>
-                <textarea id="about" name="about" rows="5"></textarea>
+                <textarea id="about" name="about"></textarea>
 
                 <input type="submit" value="Save Profile">
             </form>
@@ -121,6 +151,20 @@
             if (file) {
                 reader.readAsDataURL(file);
             }
+        }
+
+        function convertWeight() {
+            const weightPounds = document.getElementById('weight').value;
+            const weightKg = (weightPounds * 0.45359237).toFixed(2); // Convert pounds to kilograms
+            document.getElementById('weightKg').textContent = `${weightPounds} lbs is approximately ${weightKg} kg.`;
+        }
+
+        function convertHeight() {
+            const feet = document.getElementById('heightFeet').value;
+            const inches = document.getElementById('heightInches').value;
+            const totalInches = (+feet * 12) + (+inches);
+            const heightCm = (totalInches * 2.54).toFixed(2); // Convert inches to centimeters
+            document.getElementById('heightCm').textContent = `${feet}'${inches}" is approximately ${heightCm} cm.`;
         }
     </script>
 </body>
