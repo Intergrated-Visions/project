@@ -107,3 +107,98 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #006A4E; /* Peacock color */
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: #014040; /* Darker shade of peacock for contrast */
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #222;
+            width: 70%;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input, select {
+            padding: 8px;
+            margin-top: 5px;
+            background-color: #004d40;
+            border: 1px solid #888;
+            color: white;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            background-color: #008080;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #007070;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Workout Generator</h1>
+        <form onsubmit="generateWorkout(); return false;">
+            <label for="goal">Fitness Goal:</label>
+            <select id="goal">
+                <option value="lose_weight">Lose Weight</option>
+                <option value="gain_muscle">Gain Muscle</option>
+                <option value="increase_stamina">Increase Stamina</option>
+            </select>
+
+            <label for="days">Days per week:</label>
+            <input type="number" id="days" min="1" max="7" value="3">
+
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" min="10" max="120" value="60">
+
+            <input type="submit" value="Generate Workout">
+        </form>
+        <div id="workoutPlan"></div>
+    </div>
+
+    <script>
+        function generateWorkout() {
+            const goal = document.getElementById('goal').value;
+            const days = document.getElementById('days').value;
+            const duration = document.getElementById('duration').value;
+            let planDescription = 'Here is your plan: <br>';
+
+            switch(goal) {
+                case 'lose_weight':
+                    planDescription += `Perform cardio for ${duration} minutes, ${days} days a week.`;
+                    break;
+                case 'gain_muscle':
+                    planDescription += `Perform strength training focusing on different muscle groups, ${days} days a week.`;
+                    break;
+                case 'increase_stamina':
+                    planDescription += `Combine interval training with endurance workouts for ${duration} minutes, ${days} days a week.`;
+                    break;
+            }
+
+            document.getElementById('workoutPlan').innerHTML = planDescription;
+        }
+    </script>
+</body>
+</html>
