@@ -7,6 +7,10 @@
     <style>
         body {
             background-color: #006A4E; 
+            background-image: url('FitnessImage.png'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed; 
             font-family: Arial, sans-serif;
             color: white;
             margin: 0;
@@ -35,7 +39,7 @@
             transition: background-color 0.3s;
         }
         .navbar a:hover {
-            background-color: #004D40; 
+            background-color: #004D40;
         }
         .container {
             background-color: rgba(0, 128, 128, 0.8); 
@@ -62,29 +66,23 @@
     </style>
     <script>
         function logout() {
-            // Function to handle logout and redirect to the login page
             window.location.href = 'http://localhost:63667/index.html';
         }
     </script>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar">
-        <!-- Navigation links in alphabetical order -->
         <a href="calories.html">Calories</a>
         <a href="home.html">Home</a>
         <a href="journal.html">Journal</a>
         <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
     </nav>
-    <!-- Container for Dashboard Content -->
     <div class="container">
         <h1>Welcome to Personal Fitness!</h1>
         <p>This is your dashboard welcome page. The Personal Fitness Program will provide personalized fitness and nutrition plans for individuals based on their specific goals, fitness levels, dietary preferences, and restrictions.</p> 
         <p>Feel free to explore the features of your dashboard and manage your tasks, settings, etc.</p>
-        <!-- Logout Link -->
         <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 </body>
 </html>
-
