@@ -4,43 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Welcome</title>
-    <link rel="stylesheet" href="/css/style.css">
     <style>
         body {
-            background-color: #006A4E; 
+            background-color: #006A4E;
+            background-image: url('FitnessImage.png'); 
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed; 
             color: rgb(43, 13, 13); 
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .navbar {
+            text-align: center; 
+            width: 100%;
+            margin-bottom: 20px;
         }
         .navbar a {
-            color: rgb(253, 244, 244); 
+            color: white; 
+            margin: 0 10px;
+            text-decoration: none; 
+            font-size: 18px;
+            background-color: #008080; 
+            border-radius: 20px; 
+            padding: 10px 20px; 
+        }
+        .navbar a:hover {
+            background-color: #004D40; 
         }
         .logout-btn {
             background-color: #004D40; 
-            color: rgb(246, 240, 240); 
+            color: white; 
             padding: 10px;
             text-decoration: none; 
-            border-radius: 5px; 
+            border-radius: 5px;
+            display: inline-block; 
         }
         .logout-btn:hover {
             background-color: #003D30; 
+        }
+        .container {
+            background-color: rgba(0, 128, 128, 0.8); /* Slightly transparent to see the background */
+            width: 90%; 
+            margin: 20px auto; 
+            overflow: hidden;
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px #222;
+            position: relative; /* Above the background image */
         }
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
     <div class="navbar">
-        <a href="home.html">Home</a>
-        <a href="profile.html">Profile</a>
         <a href="calories.html">Calories</a>
+        <a href="home.html">Home</a>
         <a href="journal.html">Journal</a>
+        <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
     </div>
     <!-- Container for Dashboard Content -->
     <div class="container">
-        <h1>Personal Fitness!</h1>
-        <p>This is your dashboard welcome page.</p> 
-        <p>The Personal Fitness Program  will provide personalized fitness and nutrition plans for individuals based on their specific goals, fitness levels, dietary preferences, and restrictions.</p>
+        <h1>Welcome to Personal Fitness!</h1>
+        <p>This is your dashboard welcome page. The Personal Fitness Program will provide personalized fitness and nutrition plans for individuals based on their specific goals, fitness levels, dietary preferences, and restrictions.</p> 
         <p>Feel free to explore the features of your dashboard and manage your tasks, settings, etc.</p>
         <a href="home.html" class="logout-btn">Logout</a>
     </div>
 </body>
-<
+</html>
