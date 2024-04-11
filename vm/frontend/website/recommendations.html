@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Recommendations</title>
+    <title>Workout Services</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,44 +27,39 @@
             font-size: 18px;
             padding: 10px 20px;
             border-radius: 5px;
-            background-color: #008080; /* Lighter shade for contrast */
+            background-color: #008080;
         }
         .navbar a:hover {
-            background-color: #004D40; /* Darker on hover for better visual feedback */
+            background-color: #004D40;
         }
         .container {
-            background: #014040; /* Darker shade of peacock for contrast */
+            background: #014040;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px #222;
             width: 70%;
             margin-top: 20px;
+            display: flex;
+            flex-direction: column;
         }
         label {
-            font-weight: bold;
-            display: block;
-            margin-top: 20px;
+            margin-top: 10px;
         }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
+        input, select, textarea {
+            padding: 8px;
             margin-top: 5px;
-            border: 1px solid #888;
             background-color: #004d40;
+            border: 1px solid #888;
             color: white;
+            width: 100%;
         }
         input[type="submit"] {
-            background-color: #008080;
-            border: none;
-            color: white;
-            cursor: pointer;
             margin-top: 20px;
+            background-color: #008080;
+            cursor: pointer;
         }
         input[type="submit"]:hover {
             background-color: #007070;
-        }
-        .recommendations {
-            margin-top: 20px;
         }
     </style>
 </head>
@@ -74,16 +69,33 @@
         <a href="profile.html">Profile</a>
         <a href="calories.html">Calories</a>
         <a href="journal.html">Journal</a>
+        <a href="recommendations.html">Recommendations</a>
     </div>
     <div class="container">
         <h1>Workout Recommendations</h1>
-        <p>Enter your health goal to get customized workout recommendations.</p>
+        <p>Enter your health goal to get customized workout recommendations:</p>
         <form onsubmit="getRecommendations(); return false;">
             <label for="healthGoal">Your Health Goal:</label>
             <textarea id="healthGoal" name="healthGoal" rows="2" placeholder="e.g., Lose weight, gain muscle, improve stamina..."></textarea>
             <input type="submit" value="Get Recommendations">
         </form>
-        <div class="recommendations" id="recommendations"></div>
+        <div id="recommendations"></div>
+
+        <h1>Workout Generator</h1>
+        <form onsubmit="generateWorkout(); return false;">
+            <label for="goal">Fitness Goal:</label>
+            <select id="goal">
+                <option value="lose_weight">Lose Weight</option>
+                <option value="gain_muscle">Gain Muscle</option>
+                <option value="increase_stamina">Increase Stamina</option>
+            </select>
+            <label for="days">Days per week:</label>
+            <input type="number" id="days" min="1" max="7" value="3">
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" min="10" max="120" value="60">
+            <input type="submit" value="Generate Workout">
+        </form>
+        <div id="workoutPlan"></div>
     </div>
 
     <script>
@@ -91,7 +103,6 @@
             const healthGoal = document.getElementById('healthGoal').value.toLowerCase();
             const recommendations = document.getElementById('recommendations');
             let recommendationText = '';
-
             if (healthGoal.includes('lose weight')) {
                 recommendationText = 'We recommend high-intensity interval training (HIIT), along with weekly strength training sessions.';
             } else if (healthGoal.includes('gain muscle')) {
@@ -101,90 +112,14 @@
             } else {
                 recommendationText = 'Please provide a specific goal to get the best tailored recommendations.';
             }
-
             recommendations.innerHTML = `<p><strong>Recommendation:</strong> ${recommendationText}</p>`;
         }
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Generator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #006A4E; /* Peacock color */
-            color: white;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
-            background: #014040; /* Darker shade of peacock for contrast */
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #222;
-            width: 70%;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-top: 10px;
-        }
-        input, select {
-            padding: 8px;
-            margin-top: 5px;
-            background-color: #004d40;
-            border: 1px solid #888;
-            color: white;
-        }
-        input[type="submit"] {
-            margin-top: 20px;
-            background-color: #008080;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #007070;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Workout Generator</h1>
-        <form onsubmit="generateWorkout(); return false;">
-            <label for="goal">Fitness Goal:</label>
-            <select id="goal">
-                <option value="lose_weight">Lose Weight</option>
-                <option value="gain_muscle">Gain Muscle</option>
-                <option value="increase_stamina">Increase Stamina</option>
-            </select>
 
-            <label for="days">Days per week:</label>
-            <input type="number" id="days" min="1" max="7" value="3">
-
-            <label for="duration">Duration (minutes):</label>
-            <input type="number" id="duration" min="10" max="120" value="60">
-
-            <input type="submit" value="Generate Workout">
-        </form>
-        <div id="workoutPlan"></div>
-    </div>
-
-    <script>
         function generateWorkout() {
             const goal = document.getElementById('goal').value;
             const days = document.getElementById('days').value;
             const duration = document.getElementById('duration').value;
             let planDescription = 'Here is your plan: <br>';
-
             switch(goal) {
                 case 'lose_weight':
                     planDescription += `Perform cardio for ${duration} minutes, ${days} days a week.`;
@@ -196,7 +131,6 @@
                     planDescription += `Combine interval training with endurance workouts for ${duration} minutes, ${days} days a week.`;
                     break;
             }
-
             document.getElementById('workoutPlan').innerHTML = planDescription;
         }
     </script>
