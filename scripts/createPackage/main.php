@@ -22,14 +22,14 @@ $exchangeQueueConfig = [
 $client = new rabbitMQClient($connectionConfig, $exchangeQueueConfig);
 
 // Assuming you have packaged the project and have the following information available
-$packageName = "my_project_package.zip"; // The package name
-$packagePath = "/home/yardley/Desktop/project/packages"; // The absolute path to the package
+$zipSaveDir = $argv[0]; // The package name
+$zipFileName = $argv[1]; // The absolute path to the package
 
 // Construct the request array with package details
 $request = array(
     'type' => 'packer',
-    'packageName' => $packageName,
-    'packagePath' => $packagePath,
+    'packageName' => $zipFileName,
+    'packagePath' => $zipSaveDir,
     'timestamp' => date('Y-m-d H:i:s') // Current timestamp, or could be the package's timestamp
 );
 
