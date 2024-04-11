@@ -6,13 +6,9 @@
     <title>Dashboard - Welcome</title>
     <style>
         body {
-            background-color: #006A4E;
-            background-image: url('FitnessImage.png'); 
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed; 
-            color: rgb(43, 13, 13); 
-            font-family: Arial, sans-serif; 
+            background-color: #006A4E; 
+            font-family: Arial, sans-serif;
+            color: white;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -21,60 +17,74 @@
             height: 100vh;
         }
         .navbar {
-            text-align: center; 
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style-type: none;
+            padding: 0;
             width: 100%;
-            margin-bottom: 20px;
         }
         .navbar a {
-            color: white; 
-            margin: 0 10px;
-            text-decoration: none; 
-            font-size: 18px;
             background-color: #008080; 
+            color: white;
+            margin: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
             border-radius: 20px; 
-            padding: 10px 20px; 
+            transition: background-color 0.3s;
         }
         .navbar a:hover {
             background-color: #004D40; 
         }
-        .logout-btn {
-            background-color: #004D40; 
-            color: white; 
-            padding: 10px;
-            text-decoration: none; 
-            border-radius: 5px;
-            display: inline-block; 
-        }
-        .logout-btn:hover {
-            background-color: #003D30; 
-        }
         .container {
-            background-color: rgba(0, 128, 128, 0.8); /* Slightly transparent to see the background */
+            background-color: rgba(0, 128, 128, 0.8); 
             width: 90%; 
             margin: 20px auto; 
-            overflow: hidden;
             padding: 20px; 
             border-radius: 8px; 
             box-shadow: 0 0 10px #222;
-            position: relative; /* Above the background image */
+            position: relative; 
+        }
+        .logout-btn {
+            cursor: pointer;
+            background-color: #004D40; 
+            border: none; 
+            color: white; 
+            padding: 10px 20px; 
+            text-decoration: none; 
+            border-radius: 20px; 
+            display: inline-block;
+        }
+        .logout-btn:hover {
+            background-color: #003D30;
         }
     </style>
+    <script>
+        function logout() {
+            // Function to handle logout and redirect to the login page
+            window.location.href = 'http://localhost:63667/index.html';
+        }
+    </script>
 </head>
 <body>
     <!-- Navigation Bar -->
-    <div class="navbar">
+    <nav class="navbar">
+        <!-- Navigation links in alphabetical order -->
         <a href="calories.html">Calories</a>
         <a href="home.html">Home</a>
         <a href="journal.html">Journal</a>
         <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
-    </div>
+    </nav>
     <!-- Container for Dashboard Content -->
     <div class="container">
         <h1>Welcome to Personal Fitness!</h1>
         <p>This is your dashboard welcome page. The Personal Fitness Program will provide personalized fitness and nutrition plans for individuals based on their specific goals, fitness levels, dietary preferences, and restrictions.</p> 
         <p>Feel free to explore the features of your dashboard and manage your tasks, settings, etc.</p>
-        <a href="home.html" class="logout-btn">Logout</a>
+        <!-- Logout Link -->
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 </body>
 </html>
+
