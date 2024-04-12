@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script>
         function HandleLoginResponse(response) {
             var text = JSON.parse(response);
@@ -66,23 +66,24 @@
 
 <body>
     <div class="container">
-        <h2>Login Page</h2>
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <input type="button" value="Login" onclick="SubmitForm()">
-        </form>
-    </div>
-    <div id="textResponse">
-        Awaiting response...
+       <h2>Login Form</h2>
+        <form id="loginForm">
+             <label for="username">Username:</label>
+             <input type="text" id="username" name="username" required>
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+              <input type="button" value="Login" onclick="SubmitForm()">
+      </form>
+        <p id="textResponse"></p>
+        <div class="company-info">
+            <h3>About Us</h3>
+            <p>We are a leading company in providing innovative solutions for XYZ industry. Our mission is to...</p>
+        </div>
     </div>
     <div>
         <form action="logout">Logout</form>
         <input type="button" value="logout" onclick="logoutform()" >
         <!--window.location.href = "home.html"; // Redirect to home.html upon successful loginß-->
-    </div>
 </body>
 
 </html>
