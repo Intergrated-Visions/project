@@ -4,51 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registration Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #006A4E; 
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
-            background: #014040; 
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #222;
-            width: 300px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-bottom: 5px;
-        }
-        input[type="text"],
-        input[type="password"],
-        input[type="button"] {
-            padding: 8px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 4px;
-        }
-        input[type="button"] {
-            background-color: #008080; 
-            color: white;
-            cursor: pointer;
-        }
-        input[type="button"]:hover {
-            background-color: #007070;
-        }
-        #textResponse {
-            margin-top: 20px;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
     <script>
         function HandleRegistrationResponse(response) {
             console.log(response);
@@ -79,18 +35,19 @@
     </script>
 </head>
 <body>
+    <img class="left-img" src="css/reg.gif" alt="Gym picture">
+    <img class="center-img" src="css/Mental.png" alt="Gym picture"> <!-- Moved center image to the right -->
+    <img class="right-img" src="css/reg.jpg" alt="Gym picture"> <!-- Moved right image to the center -->
     <div class="container">
-        <h2>Register</h2>
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <input type="button" value="Register" onclick="SubmitForm()">
+        <h2>Integrated Visions</h2>
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="button" value="Sign Up" onclick="submitForm()">
         </form>
+        <div class="text-response" id="text-response">Awaiting response...</div>
     </div>
-    <div id="textResponse">
-        Awaiting response...
-    </div>
+   
 </body>
 </html>

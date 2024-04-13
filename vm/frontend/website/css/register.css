@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(241, 241, 241, 0.5); /* Transparent white background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 300px;
+    position: relative; /* Added */
+}
+
+h2 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px; /* Added */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="button"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+input[type="button"] {
+    background-color: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+input[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+.text-response {
+    margin-top: 20px;
+    text-align: center;
+    color: #333333;
+}
+
+/* Added styles for images */
+.left-img,
+.right-img,
+.center-img {
+    position: absolute;
+    top: 0;
+    width: 33.33%; /* Adjusted for three images */
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.left-img {
+    left: 0;
+}
+
+.right-img {
+    left: 33.33%; /* Moved right image to the center */
+}
+
+.center-img {
+    right: 0; /* Moved center image to the right */
+}
