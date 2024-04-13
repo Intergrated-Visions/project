@@ -2,36 +2,41 @@
 <?php
 require_once('rabbitMQLib.inc');
 
-$BROKER_HOST = "si-developer.grouse-hake.ts.net"; // Default
+// Ensure the script has the correct number of command-line arguments
+if ($argc != 3) {
+    echo "Usage: {$argv[0]} <directoryPath> <zipFileName>\n";
+    exit(1);
+}
+
+$zipSaveDir = $argv[1]; // The directory where the zip file is saved
+$zipFileName = $argv[2]; // The name of the zip file
+
+$BROKER_HOST = "si-developer.grouse-hake.ts.net"; // This should be your RabbitMQ server address
 
 $connectionConfig = [
-    "BROKER_HOST" => $BROKER_HOST, // This should be your RabbitMQ server address
-    "BROKER_PORT" => 5672, // The port RabbitMQ is running on
-    "USER" => "test", // Your RabbitMQ username
-    "PASSWORD" => "test", // Your RabbitMQ password
-    "VHOST" => "integratedVisions", // The virtual host in RabbitMQ
+    "BROKER_HOST" => $BROKER_HOST,
+    "BROKER_PORT" => 5672,
+    "USER" => "test",
+    "PASSWORD" => "test",
+    "VHOST" => "integratedVisions",
 ];
 
 $exchangeQueueConfig = [
-    "EXCHANGE_TYPE" => "topic", // Type of exchange
-    "AUTO_DELETE" => false, // Usually false, so the queue persists beyond the connection
-    "EXCHANGE" => "createPackageExchange", // The exchange name
-    "QUEUE" => "createPackageQueue" // The queue name
+    "EXCHANGE_TYPE" => "topic",
+    "AUTO_DELETE" => false,
+    "EXCHANGE" => "createPackageExchange",
+    "QUEUE" => "createPackageQueue"
 ];
 
 $client = new rabbitMQClient($connectionConfig, $exchangeQueueConfig);
 
-// Assuming you have packaged the project and have the following information available
-$packageName = "my_project_package.zip"; // The package name
-$packagePath = "/home/yardley/Desktop/project/packages"; // The absolute path to the package
-
 // Construct the request array with package details
-$request = array(
+$request = [
     'type' => 'packer',
-    'packageName' => $packageName,
-    'packagePath' => $packagePath,
+    'packageName' => $zipFileName,
+    'packagePath' => $zipSaveDir,
     'timestamp' => date('Y-m-d H:i:s') // Current timestamp, or could be the package's timestamp
-);
+];
 
 // Send the package details as a request to the RabbitMQ server
 $response = $client->send_request($request);
