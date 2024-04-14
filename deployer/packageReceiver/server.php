@@ -26,7 +26,7 @@ function requestProcessor($request)
             $remoteVMHost = "100.68.84.125";
 
             // Local directory to copy the package to
-            $localPath = "/home/ubuntu/Desktop/deployer/packageReceiver/copyfile";
+            $localPath = "/home/ubuntu/Desktop/project/deployer/packageReceiver/copyfile";
 
             // Find the newest file in the remote directory
             $findNewestFileCommand = "ssh {$remoteVMUsername}@{$remoteVMHost} 'cd {$remotePackagePath} && ls -t | head -n1'";
