@@ -1,4 +1,6 @@
 #!/bin/bash
+sudo apt update
+sudo apt install mysql-server
 
 # Update package index
 sudo apt update
