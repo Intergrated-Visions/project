@@ -1,10 +1,14 @@
 #!/bin/bash
 
 # Define the directory of the project you want to package
-projectDir="/home/yardley/Desktop/project"
+projectDir="/home/ubuntu/Desktop/project"
 
 # Define the directory where the zip file will be saved
 zipSaveDir="$projectDir/packages"
+
+# Define remote VM details (update these as needed)
+remoteVMUsername="ubuntu"
+remoteVMHost="100.87.121.95"
 
 # Ensure the save directory exists
 mkdir -p "$zipSaveDir"
@@ -34,8 +38,8 @@ ls -t | grep -E '\.zip$' | tail -n +4 | xargs -r rm --  # List zip files, order 
 # Assuming main.php is located in the 'scripts/createPackage' directory
 phpScriptPath="$projectDir/scripts/createPackage/main.php"
 
-# Run main.php with the directory path and the zip file name
-/usr/bin/php "$phpScriptPath" "$zipSaveDir" "$zipFileName"
+# Run main.php with the directory path, zip file name, remote VM username, and host
+/usr/bin/php "$phpScriptPath" "$zipSaveDir" "$zipFileName" "$remoteVMUsername" "$remoteVMHost"
 
 # Return to the original directory
 cd -

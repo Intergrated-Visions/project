@@ -2,14 +2,26 @@
 <?php
 require_once('rabbitMQLib.inc');
 
-// Ensure the script has the correct number of command-line arguments
-if ($argc != 3) {
-    echo "Usage: {$argv[0]} <directoryPath> <zipFileName>\n";
+if ($argc != 5) {
+    echo "Usage: {$argv[0]} <directoryPath> <zipFileName> <remoteVMUsername> <remoteVMHost>\n";
     exit(1);
 }
 
-$zipSaveDir = $argv[1]; // The directory where the zip file is saved
-$zipFileName = $argv[2]; // The name of the zip file
+// Assigning passed arguments to variables
+$directoryPath = $argv[1];
+$zipFileName = $argv[2];
+$remoteVMUsername = $argv[3];
+$remoteVMHost = $argv[4];
+
+// Setup your connection configuration and message array
+$message = [
+    'type' => 'packer',
+    'directoryPath' => $directoryPath,
+    'zipFileName' => $zipFileName,
+    'remoteVMUsername' => $remoteVMUsername,
+    'remoteVMHost' => $remoteVMHost,
+    'timestamp' => date('Y-m-d H:i:s') // Current timestamp
+];
 
 $BROKER_HOST = "si-developer.grouse-hake.ts.net"; // This should be your RabbitMQ server address
 
@@ -28,23 +40,10 @@ $exchangeQueueConfig = [
     "QUEUE" => "createPackageQueue"
 ];
 
+// Assuming you have a RabbitMQ client setup to send the message
 $client = new rabbitMQClient($connectionConfig, $exchangeQueueConfig);
 
-// Construct the request array with package details
-$request = [
-    'type' => 'packer',
-    'packageName' => $zipFileName,
-    'packagePath' => $zipSaveDir,
-    'timestamp' => date('Y-m-d H:i:s') // Current timestamp, or could be the package's timestamp
-];
+$response = $client->send_request($message);
 
-// Send the package details as a request to the RabbitMQ server
-$response = $client->send_request($request);
-
-// Check response from the server
-if ($response) {
-    echo "Server responded: ", print_r($response, true), "\n";
-} else {
-    echo "Server did not respond. There might be an error or the server might not be running.\n";
-}
+echo "Response from server: " . print_r($response, true) . "\n";
 ?>
