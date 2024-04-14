@@ -4,7 +4,7 @@ require_once('rabbitMQLib.inc');
 
 function requestProcessor($request)
 {
-    echo "received request".PHP_EOL;
+    echo "Received request:\n";
     var_dump($request);
 
     if (!isset($request['type'])) {
@@ -13,66 +13,58 @@ function requestProcessor($request)
 
     switch ($request['type']) {
         case "packer":
-            $packageName = $request['packageName'] ?? null;
-            $remotePackagePath = $request['packagePath'] ?? null;
-            $timestamp = $request['timestamp'] ?? date('Y-m-d H:i:s');
-
-            if (!$packageName || !$remotePackagePath) {
-                return ['returnCode' => '1', 'message' => 'Missing package name or path'];
+            // Validate necessary data is present
+            if (empty($request['zipFileName']) || empty($request['directoryPath'])) {
+                return ['returnCode' => '1', 'message' => 'Missing necessary information about the package.'];
             }
 
-            // Details of the remote VM
-            $remoteVMUsername = "yardley";
-            $remoteVMHost = "100.68.84.125";
+            $packageName = $request['zipFileName'];
+            $remotePackagePath = $request['directoryPath'];
+            $remoteVMUsername = $request['remoteVMUsername'] ?? 'defaultUsername'; // Default if not provided
+            $remoteVMHost = $request['remoteVMHost'] ?? 'defaultHost'; // Default if not provided
+
+            echo "Preparing to handle package: $packageName from $remoteVMHost\n";
 
             // Local directory to copy the package to
             $localPath = "/home/ubuntu/Desktop/project/deployer/packageReceiver/copyfile";
 
-            // Find the newest file in the remote directory
-            $findNewestFileCommand = "ssh {$remoteVMUsername}@{$remoteVMHost} 'cd {$remotePackagePath} && ls -t | head -n1'";
-            exec($findNewestFileCommand, $output, $returnVar);
-
-            if ($returnVar !== 0 || empty($output)) {
-                error_log("Failed to find the newest file. Command: $findNewestFileCommand");
-                return ['returnCode' => '1', 'message' => "Failed to find the newest file."];
-            }
-
-            $newestFileName = trim($output[0]);
-            $remoteFilePath = rtrim($remotePackagePath, '/') . '/' . $newestFileName;
-
             // Ensure the local directory exists
             if (!file_exists($localPath) && !mkdir($localPath, 0755, true)) {
-                return ['returnCode' => '1', 'message' => "Failed to create local directory."];
+                return ['returnCode' => '1', 'message' => "Failed to create local directory $localPath."];
             }
 
-            // Copy the newest file from the remote directory
-            $scpCommand = "scp {$remoteVMUsername}@{$remoteVMHost}:\"{$remoteFilePath}\" \"{$localPath}/\"";
+            // Define full path for remote and local files
+            $remoteFilePath = rtrim($remotePackagePath, '/') . '/' . $packageName;
+            $localFilePath = $localPath . '/' . $packageName;
+
+            // Command to copy the file from the remote server
+            $scpCommand = "scp {$remoteVMUsername}@{$remoteVMHost}:\"{$remoteFilePath}\" \"{$localFilePath}\"";
             exec($scpCommand, $output, $returnVar);
 
             if ($returnVar !== 0) {
-                error_log("Failed to scp file from remote VM. Command: $scpCommand");
+                error_log("Failed to scp file: $scpCommand");
                 return ['returnCode' => '1', 'message' => "Failed to copy file from remote VM."];
             }
 
-            $localPackagePath = $localPath . '/' . $newestFileName;
-            echo "Newest package $newestFileName copied successfully to $localPackagePath.\n";
+            echo "Package $packageName copied successfully to $localFilePath.\n";
 
-            // ... rest of your logic ...
+            // Additional processing can be done here
 
-            return ['returnCode' => '0', 'message' => 'Newest package received and processed.'];
+            return ['returnCode' => '0', 'message' => 'Package received and processed successfully.'];
+
         default:
             return ["returnCode" => '0', 'message' => "Server received request and processed"];
     }
 }
 
-// RabbitMQ server configuration...
-$BROKER_HOST = "si-developer.grouse-hake.ts.net"; // Set your broker host
+// Configuration for RabbitMQ connection
+$BROKER_HOST = "si-developer.grouse-hake.ts.net";
 $connectionConfig = [
     "BROKER_HOST" => $BROKER_HOST,
     "BROKER_PORT" => 5672,
-    "USER" => "test", // Set your user
-    "PASSWORD" => "test", // Set your password
-    "VHOST" => "integratedVisions", // Set your vhost
+    "USER" => "test",
+    "PASSWORD" => "test",
+    "VHOST" => "integratedVisions",
 ];
 $exchangeQueueConfig = [
     "EXCHANGE_TYPE" => "topic",
@@ -83,7 +75,7 @@ $exchangeQueueConfig = [
 
 $server = new rabbitMQServer($connectionConfig, $exchangeQueueConfig);
 
-echo "testRabbitMQServer BEGIN".PHP_EOL;
+echo "testRabbitMQServer BEGIN\n";
 $server->process_requests('requestProcessor');
-echo "testRabbitMQServer END".PHP_EOL;
+echo "testRabbitMQServer END\n";
 ?>
