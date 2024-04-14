@@ -59,6 +59,9 @@
             text-decoration: none; 
             border-radius: 20px; 
             display: inline-block;
+            position: absolute; /* Added */
+            top: 10px; /* Added */
+            right: 10px; /* Added */
         }
         .logout-btn:hover {
             background-color: #003D30;
@@ -66,7 +69,7 @@
     </style>
     <script>
         function logout() {
-            window.location.href = 'http://localhost:63667/index.html';
+            window.location.href = 'index.html';
         }
     </script>
 </head>
@@ -82,7 +85,8 @@
         <h1>Welcome to Personal Fitness!</h1>
         <p>This is your dashboard welcome page. The Personal Fitness Program will provide personalized fitness and nutrition plans for individuals based on their specific goals, fitness levels, dietary preferences, and restrictions.</p> 
         <p>Feel free to explore the features of your dashboard and manage your tasks, settings, etc.</p>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+
     </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
 </body>
 </html>
