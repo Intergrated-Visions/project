@@ -6,18 +6,13 @@ projectDir="/home/ubuntu/Desktop/project"
 # Define the directory where the zip file will be saved
 zipSaveDir="$projectDir/packages"
 
-# Define remote VM details (update these as needed)
-remoteVMUsername="ubuntu"
-remoteVMHost="100.87.121.95"
+# The name of the archive you want to create
+zipFileName="project_backup_$(date +%Y-%m-%d_%H-%M-%S).zip"
 
 # Ensure the save directory exists
 mkdir -p "$zipSaveDir"
 
-# Define the name of the archive you want to create
-zipFileName="backup$(date +%Y-%m-%d_%H-%M-%S).zip"
-zipFilePath="$zipSaveDir/$zipFileName"
-
-# Navigate to the project directory
+# Navigate to the project directory to use relative paths for exclusions
 cd "$projectDir" || exit
 
 # Package the project into a zip file, excluding the '.git' folder and the packages directory itself
