@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Check if Keepalived is installed
+if ! command -v keepalived &>/dev/null; then
+    # Install Keepalived
+    echo "Installing Keepalived..."
+    sudo apt update
+    sudo apt install -y keepalived
+    echo "Keepalived installed."
+fi
+
 check_apache_script="/etc/keepalived/check_apache.sh"
 
 # Check if the file exists

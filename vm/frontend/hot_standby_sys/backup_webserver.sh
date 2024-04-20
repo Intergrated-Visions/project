@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# Check if Keepalived is installed
-if ! command -v keepalived &>/dev/null; then
-    # Install Keepalived
-    echo "Installing Keepalived..."
-    sudo apt update
-    sudo apt install -y keepalived
-    echo "Keepalived installed."
-fi
-
 # Create keepalived.conf file
 keepalived_conf="/etc/keepalived/keepalived.conf"
 
