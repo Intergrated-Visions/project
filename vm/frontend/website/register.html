@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +20,7 @@
             var request = new XMLHttpRequest();
             request.open("POST", "/utils/authentication/client.php", true);
             request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.onreadystatechange = function() {
+            request.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     HandleRegistrationResponse(this.responseText);
                 }
@@ -34,10 +35,11 @@
         }
     </script>
 </head>
+
 <body>
-    <img class="left-img" src="css/reg.gif" alt="Gym picture">
-    <img class="center-img" src="css/Mental.png" alt="Gym picture"> <!-- Moved center image to the right -->
-    <img class="right-img" src="css/reg.jpg" alt="Gym picture"> <!-- Moved right image to the center -->
+    <img class="left-img" src="css/images/reg.gif" alt="Gym picture">
+    <img class="center-img" src="css/images/Mental.png" alt="Gym picture"> <!-- Moved center image to the right -->
+    <img class="right-img" src="css/images/reg.jpg" alt="Gym picture"> <!-- Moved right image to the center -->
     <div class="container">
         <h2>Integrated Visions</h2>
         <h2>Sign Up</h2>
@@ -53,4 +55,5 @@
         Awaiting response...
     </div>
 </body>
+
 </html>
