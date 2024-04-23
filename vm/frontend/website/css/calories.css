@@ -1,0 +1,40 @@
+body {
+    background-color: #006A4E;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.navbar {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.navbar a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 18px;
+    background-color: #008080;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.navbar a:hover {
+    background-color: #004D40;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    overflow: hidden;
+    padding: 20px;
+    background-color: #008080;
+}
+
+iframe {
+    display: block;
+    margin: 0 auto;
+    border: none;
+    width: 100%;
+    height: 1000px;
+}

@@ -4,69 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Welcome</title>
-    <style>
-        body {
-            background-color: #006A4E; 
-            background-image: url('FitnessImage.png'); 
-            background-size: cover; 
-            background-position: center;
-            background-attachment: fixed; 
-            font-family: Arial, sans-serif;
-            color: white;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-        }
-        .navbar {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            list-style-type: none;
-            padding: 0;
-            width: 100%;
-        }
-        .navbar a {
-            background-color: #008080; 
-            color: white;
-            margin: 5px;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 20px; 
-            transition: background-color 0.3s;
-        }
-        .navbar a:hover {
-            background-color: #004D40;
-        }
-        .container {
-            background-color: rgba(0, 128, 128, 0.8); 
-            width: 90%; 
-            margin: 20px auto; 
-            padding: 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 0 10px #222;
-            position: relative; 
-        }
-        .logout-btn {
-            cursor: pointer;
-            background-color: #004D40; 
-            border: none; 
-            color: white; 
-            padding: 10px 20px; 
-            text-decoration: none; 
-            border-radius: 20px; 
-            display: inline-block;
-            position: absolute; /* Added */
-            top: 10px; /* Added */
-            right: 10px; /* Added */
-        }
-        .logout-btn:hover {
-            background-color: #003D30;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+
+    
     <script>
         function logout() {
             window.location.href = 'index.html';
