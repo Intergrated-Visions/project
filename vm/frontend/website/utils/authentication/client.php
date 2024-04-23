@@ -17,12 +17,13 @@ if (!isset($_POST["type"]) || !isset($_POST["uname"]) || !isset($_POST["pword"])
   exit(0);
 }
   $BROKER_HOST = "127.0.0.1"; // Default
-
-  $requestUrlArray = explode("-", $_SERVER["HTTP_HOST"]);
-  // checks if the first machine is frontend to set broker dynamically (production/development)
-  if($requestUrlArray[2] === "frontend"){
-    $requestUrlArray[2] = "backend";
-    $BROKER_HOST = implode("-",$requestUrlArray);
+  
+  $hostname = explode("-", gethostname());
+if($hostname[2] === "frontend" || $hostname[2] === "dmz"){
+    $hostname[2] = "backend";
+    $BROKER_HOST = implode("-",$hostname);
+    $BROKER_HOST = implode("-",$hostname);
+    $BROKER_HOST .= ".grouse-hake.ts.net";
 }
 
 $connectionConfig = [

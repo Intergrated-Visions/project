@@ -9,7 +9,7 @@
     <script>
         function HandleLoginResponse(response) {
             var text = JSON.parse(response);
-            console.log(text)
+            console.log(response)
 
             document.getElementById("textResponse").innerHTML = "Response: " + text + "<p>";
             // save cookie hello
@@ -34,6 +34,8 @@
             request.open("POST", "/utils/authentication/client.php", true);
             request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             request.onreadystatechange = function () {
+                console.log('random string')
+                console.log(this)
                 console.log(this.responseText, typeof this.responseText)
                 if (this.readyState == 4 && this.status == 200) {
                     HandleLoginResponse(this.responseText);
@@ -66,13 +68,14 @@
 
 <body>
     <div class="container">
-       <h2>Login Form</h2>
+       <h2>Login Form??????</h2>
         <form id="loginForm">
              <label for="username">Username:</label>
              <input type="text" id="username" name="username" required>
               <label for="password">Password:</label>
               <input type="password" id="password" name="password" required>
               <input type="button" value="Login" onclick="SubmitForm()">
+
       </form>
         <p id="textResponse"></p>
         <div class="company-info">
