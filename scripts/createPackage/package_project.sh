@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the directory of the project you want to package
-projectDir="/home/ubuntu/Desktop/project"
+projectDir="/home/ubuntu/Desktop/project/"
 
 # Define the directory where the zip file will be saved
 zipSaveDir="$projectDir/packages"
@@ -16,7 +16,7 @@ mkdir -p "$zipSaveDir"
 cd "$projectDir" || exit
 
 # Package the project into a zip file, excluding the '.git' folder and the packages directory itself
-zip -r -9 "$zipFilePath" . -x "*.git*" -x "packages/*"
+zip -r -9 "$zipFilePath" . -x "*.git*" -x "packages/*" -x"scripts/*"
 
 # Check if the ZIP command succeeded
 if [ $? -eq 0 ]; then
