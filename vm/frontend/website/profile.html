@@ -12,8 +12,8 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="calories.html">Calories</a>
         <a href="home.html">Home</a>
+        <a href="calories.html">Calories</a>
         <a href="journal.html">Journal</a>
         <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
@@ -73,28 +73,72 @@
         function previewFile() {
             const file = document.getElementById('profilePicture').files[0];
             const reader = new FileReader();
-            reader.onloadend = function() {
+            reader.onloadend = function () {
                 document.getElementById('profilePicPreview').src = reader.result;
-            }
+            };
             if (file) {
                 reader.readAsDataURL(file);
             }
         }
 
-        function convertWeight() {
-            const weightPounds = document.getElementById('weight').value;
+        function collectFormData() {
+            const weightPounds = parseInt(document.getElementById('weight').value);
             const weightKg = (weightPounds * 0.45359237).toFixed(2); // Convert pounds to kilograms
-            document.getElementById('weightKg').textContent = `${weightPounds} lbs is approximately ${weightKg} kg.`;
+
+            const feet = parseInt(document.getElementById('heightFeet').value);
+            const inches = parseInt(document.getElementById('heightInches').value);
+            const totalInches = (feet * 12) + inches;
+            const heightCm = (totalInches * 2.54).toFixed(2); // Convert inches to centimeters
+
+            var formData = {
+                profilePicture: document.getElementById('profilePicture').files[0], // This will get the file object for the profile picture
+                fullName: document.getElementById('fullname').value,
+                age: parseInt(document.getElementById('age').value),
+                height: {
+                    feet: feet,
+                    inches: inches,
+                    centimeters: heightCm
+                },
+                weight: {
+                    pounds: weightPounds,
+                    kilograms: weightKg
+                },
+                goals: document.getElementById('goal').value,
+                dietaryRestrictions: document.getElementById('dietaryRestrictions').value,
+                about: document.getElementById('about').value
+            };
+
+            console.log(formData); // Log the data to the console for debugging
+            sendDataToServer(formData); // Function to send data to the server
         }
 
-        function convertHeight() {
-            const feet = document.getElementById('heightFeet').value;
-            const inches = document.getElementById('heightInches').value;
-            const totalInches = (+feet * 12) + (+inches);
-            const heightCm = (totalInches * 2.54).toFixed(2); // Convert inches to centimeters
-            document.getElementById('heightCm').textContent = `${feet}'${inches}" is approximately ${heightCm} cm.`;
+        function sendDataToServer(formData) {
+            // Assuming JSON data is sent (excluding file uploads):
+            formData ['type'] = 'profile'
+            fetch('/utils/profile/client.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+              .catch((error) => {
+                    console.error('Error:', error);
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+              
         }
+
+        // Attach the collectFormData function to the form submit event
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            collectFormData();
+        });
     </script>
+
 </body>
 </html>
 

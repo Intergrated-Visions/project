@@ -5,7 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <nav class="navbar">
+        <a href="home.html">Home</a>
+        <a href="calories.html">Calories</a>
+        <a href="journal.html">Journal</a>
+        <a href="profile.html">Profile</a>
+        <a href="recommendations.html">Recommendations</a>
+    </nav>
     <script>
         function HandleLoginResponse(response) {
             var text = JSON.parse(response);
@@ -68,7 +75,7 @@
 
 <body>
     <div class="container">
-       <h2>Login Form?</h2>
+       <h2>Login Form</h2>
         <form id="loginForm">
              <label for="username">Username:</label>
              <input type="text" id="username" name="username" required>

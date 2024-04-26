@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Services</title>
     <link rel="stylesheet" type="text/css" href="css/recommendations.css">
 </head>
+
 <body>
-    <div class="navbar">
-        <!-- Links arranged in alphabetical order -->
-        <a href="calories.html">Calories</a>
+    <nav class="navbar">
         <a href="home.html">Home</a>
+        <a href="calories.html">Calories</a>
         <a href="journal.html">Journal</a>
         <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
-    </div>
+    </nav>
     <div class="container">
         <h1>Workout Recommendations</h1>
         <p>Enter your health goal to get customized workout recommendations:</p>
-        <form onsubmit="getRecommendations(); return false;">
+        <form id="recommendationsForm">
             <label for="healthGoal">Your Health Goal:</label>
-            <textarea id="healthGoal" name="healthGoal" rows="2" placeholder="e.g., Lose weight, gain muscle, improve stamina..."></textarea>
+            <textarea id="healthGoal" name="healthGoal" rows="2"
+                placeholder="e.g., Lose weight, gain muscle, improve stamina..."></textarea>
             <input type="submit" value="Get Recommendations">
         </form>
         <div id="recommendations"></div>
 
         <h1>Workout Generator</h1>
-        <form onsubmit="generateWorkout(); return false;">
+        <form id="workoutForm">
             <label for="goal">Fitness Goal:</label>
             <select id="goal">
                 <option value="lose_weight">Lose Weight</option>
@@ -43,40 +45,71 @@
     </div>
 
     <script>
+        // Event listener for the recommendations form
+        document.getElementById('recommendationsForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            getRecommendations();
+        });
+
+        // Event listener for the workout form
+        document.getElementById('workoutForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            generateWorkout();
+        });
+
+        // Function to get recommendations from the PHP API
         function getRecommendations() {
-            const healthGoal = document.getElementById('healthGoal').value.toLowerCase();
-            const recommendations = document.getElementById('recommendations');
-            let recommendationText = '';
-            if (healthGoal.includes('lose weight')) {
-                recommendationText = 'We recommend high-intensity interval training (HIIT), along with weekly strength training sessions.';
-            } else if (healthGoal.includes('gain muscle')) {
-                recommendationText = 'Focus on strength training with weights, increasing the weight and lowering the reps over time.';
-            } else if (healthGoal.includes('improve stamina')) {
-                recommendationText = 'Incorporate long-distance running, cycling, and swimming into your routine.';
-            } else {
-                recommendationText = 'Please provide a specific goal to get the best tailored recommendations.';
-            }
-            recommendations.innerHTML = `<p><strong>Recommendation:</strong> ${recommendationText}</p>`;
+            const healthGoalElement = document.getElementById('healthGoal');
+            const healthGoal = healthGoalElement.value;
+            const recommendationsDiv = document.getElementById('recommendations');
+
+            fetch('http://localhost/backend/api/recommendations.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ goal: healthGoal })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    recommendationsDiv.innerHTML = `<p><strong>Recommendation:</strong> ${data.recommendation}</p>`;
+                })
+                .catch(error => {
+                    console.error('Error fetching recommendations:', error);
+                    recommendationsDiv.innerHTML = `<p><strong>Error:</strong> There was an issue getting recommendations.</p>`;
+                });
         }
 
+        // Function to generate a workout plan from the PHP API
         function generateWorkout() {
-            const goal = document.getElementById('goal').value;
-            const days = document.getElementById('days').value;
-            const duration = document.getElementById('duration').value;
-            let planDescription = 'Here is your plan: <br>';
-            switch(goal) {
-                case 'lose_weight':
-                    planDescription += `Perform cardio for ${duration} minutes, ${days} days a week.`;
-                    break;
-                case 'gain_muscle':
-                    planDescription += `Perform strength training focusing on different muscle groups, ${days} days a week.`;
-                    break;
-                case 'increase_stamina':
-                    planDescription += `Combine interval training with endurance workouts for ${duration} minutes, ${days} days a week.`;
-                    break;
-            }
-            document.getElementById('workoutPlan').innerHTML = planDescription;
+            const goalElement = document.getElementById('goal');
+            const daysElement = document.getElementById('days');
+            const durationElement = document.getElementById('duration');
+            const workoutPlanDiv = document.getElementById('workoutPlan');
+
+            const workoutData = {
+                goal: goalElement.value,
+                days: daysElement.value,
+                duration: durationElement.value
+            };
+
+            fetch('http://100.116.50.109/backend/api/recommendations.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(workoutData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    workoutPlanDiv.innerHTML = data.planDescription;
+                })
+                .catch(error => {
+                    console.error('Error fetching workout plan:', error);
+                    workoutPlanDiv.innerHTML = `<p><strong>Error:</strong> There was an issue generating the workout plan.</p>`;
+                });
         }
     </script>
 </body>
+
 </html>

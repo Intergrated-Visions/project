@@ -1,70 +1,46 @@
- body {
-     background-color: #006A4E;
-     background-image: url('FitnessImage.png');
-     background-size: cover;
-     background-position: center;
-     background-attachment: fixed;
-     font-family: Arial, sans-serif;
-     color: white;
-     margin: 0;
-     padding: 20px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     height: 100vh;
- }
+/* Add this CSS to your stylesheet */
+#navbar {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 0;
+    position: fixed;
+    /* Makes the navigation bar stay at the top */
+    width: 100%;
+    z-index: 1000;
+}
 
- .navbar {
-     display: flex;
-     justify-content: center;
-     flex-wrap: wrap;
-     list-style-type: none;
-     padding: 0;
-     width: 100%;
- }
+#navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    /* Spreads the navigation items evenly */
+}
 
- .navbar a {
-     background-color: #008080;
-     color: white;
-     margin: 5px;
-     text-decoration: none;
-     font-size: 18px;
-     padding: 10px 20px;
-     border-radius: 20px;
-     transition: background-color 0.3s;
- }
+#navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 
- .navbar a:hover {
-     background-color: #004D40;
- }
+#navbar ul li a:hover,
+#navbar ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 15px rgba(255, 255, 255, 0.3);
+}
 
- .container {
-     background-color: rgba(0, 128, 128, 0.8);
-     width: 90%;
-     margin: 20px auto;
-     padding: 20px;
-     border-radius: 8px;
-     box-shadow: 0 0 10px #222;
-     position: relative;
- }
+@media (max-width: 768px) {
+    #navbar ul {
+        flex-direction: column;
+    }
 
- .logout-btn {
-     cursor: pointer;
-     background-color: #004D40;
-     border: none;
-     color: white;
-     padding: 10px 20px;
-     text-decoration: none;
-     border-radius: 20px;
-     display: inline-block;
-     position: absolute;
-     /* Added */
-     top: 10px;
-     /* Added */
-     right: 10px;
-     /* Added */
- }
-
- .logout-btn:hover {
-     background-color: #003D30;
- }
+    #navbar ul li {
+        margin: 5px 0;
+    }
+}

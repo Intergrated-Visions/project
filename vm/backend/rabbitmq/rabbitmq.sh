@@ -70,6 +70,12 @@ VHOST="integratedVisions"
 
 # Original exchange and queue
 create_exchange_and_queue "authenticationExchange" "topic" "authenticationQueue"
+create_exchange_and_queue "loginExchange" "topic" "loginQueue"
+create_exchange_and_queue "registerExchange" "topic" "registerQueue"
+
+
+
+
 
 # Create user
 output=$(sudo rabbitmqadmin --host=$RABBITMQ_ADMIN_HOST --port=$RABBITMQ_ADMIN_PORT --username=$RABBITMQ_ADMIN_USER --password=$RABBITMQ_ADMIN_PASS declare user name="$RABBITMQ_USER" password="$RABBITMQ_PASS" tags="" 2>&1)

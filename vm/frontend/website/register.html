@@ -9,10 +9,17 @@
     <script>
         function HandleRegistrationResponse(response) {
             console.log(response);
-            var text = JSON.parse(response);
-            document.getElementById("textResponse").innerHTML = "Response: " + text + "<p>";
-            if (text.returnCode === 200) {
-                window.location.href = "home.html";
+            try {
+                var responseObject = JSON.parse(response);
+                if (responseObject.returnCode === 200) {
+                    window.location.href = "home.html";
+                } else {
+                    var errorMessage = responseObject.message || "An error occurred during registration.";
+                    alert(errorMessage);
+                }
+            } catch (e) {
+                console.error("Error parsing JSON: ", e);
+                alert("An error occurred: " + response);
             }
         }
 
@@ -37,6 +44,13 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        <a href="home.html">Home</a>
+        <a href="calories.html">Calories</a>
+        <a href="journal.html">Journal</a>
+        <a href="profile.html">Profile</a>
+        <a href="recommendations.html">Recommendations</a>
+    </nav>
     <img class="left-img" src="css/images/reg.gif" alt="Gym picture">
     <img class="center-img" src="css/images/Mental.png" alt="Gym picture"> <!-- Moved center image to the right -->
     <img class="right-img" src="css/images/reg.jpg" alt="Gym picture"> <!-- Moved right image to the center -->
