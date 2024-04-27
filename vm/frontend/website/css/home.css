@@ -1,12 +1,27 @@
-/* Add this CSS to your stylesheet */
+/* Add this CSS to your entire webpage */
+body {
+    background-image: url('images/FitnessImage.png');
+    /* Replace with the actual path to your image */
+    background-size: cover;
+    /* Ensure the image covers the whole page */
+    background-position: center;
+    /* Center the background image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    background-attachment: fixed;
+    /* Optional: Makes the background fixed during scroll */
+}
+
 #navbar {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: rgba(255, 255, 255, 0.1);
+    /* Semi-transparent background for navbar */
     backdrop-filter: blur(5px);
+    /* Blur effect for background behind navbar */
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 10px 0;
     position: fixed;
-    /* Makes the navigation bar stay at the top */
+    /* Navbar stays at the top */
     width: 100%;
     z-index: 1000;
 }
