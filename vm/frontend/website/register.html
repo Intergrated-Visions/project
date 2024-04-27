@@ -44,32 +44,35 @@
 </head>
 
 <body>
-    <div id="navbar">
-        <ul>
-            <li><a href="home.html" class="active">Home</a></li>
-            <li><a href="calories.html">Calories</a></li>
-            <li><a href="journal.html">Journal</a></li>
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="recommendations.html">Recommendations</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
-    </div><div class="image-container">
+<div id="navbar">
+    <ul>
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="calories.html">Calories</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="register.html">Sign Up</a></li> <!-- Sign Up before Logout -->
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
+    <div>
+        <div class="image-container">
         <div class="left-image"></div>
         <div class="center-image"></div>
         <div class="right-image"></div>
     </div>
+<div class="container">
+    <h2>Integrated Visions</h2>
+    <h2>Sign Up</h2>
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <input type="button" value="Register" onclick="SubmitForm()">
+    </form>
+</div>
 
-    <div class="container">
-        <h2>Integrated Visions</h2>
-        <h2>Sign Up</h2>
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <input type="button" value="Register" onclick="SubmitForm()">
-        </form>
-    </div>
     <div id="textResponse">
         Awaiting response...
     </div>

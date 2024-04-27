@@ -1,29 +1,94 @@
+</html>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journal</title>
     <link rel="stylesheet" type="text/css" href="css/journal.css">
 </head>
+
 <body>
-<div id="navbar">
-    <ul>
-        <li><a href="home.html" class="active">Home</a></li>
-        <li><a href="calories.html">Calories</a></li>
-        <li><a href="journal.html">Journal</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="recommendations.html">Recommendations</a></li>
-        <li><a href="logout.php">Logout</a></li>
-    </ul>
-</div>
-        <textarea placeholder="Write a new journal entry..."></textarea>
-        <button onclick="addEntry()">Add Entry</button>
+    <div id="navbar">
+        <div id="navbar">
+            <ul>
+                <li><a href="home.html" class="active">Home</a></li>
+                <li><a href="calories.html">Calories</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="recommendations.html">Recommendations</a></li>
+                <li><a href="register.html">Sign Up</a></li> <!-- Sign Up before Logout -->
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
+        <!-- Your existing navbar content -->
     </div>
-    <div class="journal-entries"></div>
+<div id="calendar"></div>
+
+
+    <div class="goal-setting-container">
+        <input type="text" id="weeklyGoalInput" placeholder="Set your weekly goal">
+        <button onclick="setWeeklyGoal()">Set Weekly Goal</button>
+    </div>
+
+    <div class="journal-container">
+        <textarea id="journalEntry" placeholder="Write a new journal entry..."></textarea>
+        <button onclick="addJournalEntry()">Add Entry</button>
+    </div>
+
+    <div id="goalsList"></div>
 
     <script>
-        // Your existing JavaScript code here for handling journal entries
+        // calendar.js
+            document.addEventListener('DOMContentLoaded', () => {
+                const calendar = document.getElementById('calendar');
+                const now = new Date();
+                createCalendar(now.getFullYear(), now.getMonth());
+
+                function createCalendar(year, month) {
+                    calendar.innerHTML = ''; // Clear previous calendar
+
+                    // Adding day labels
+                    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    days.forEach(day => {
+                        const dayLabel = document.createElement('div');
+                        dayLabel.className = 'day label';
+                        dayLabel.textContent = day;
+                        calendar.appendChild(dayLabel);
+                    });
+
+                    // Calculate days for calendar
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const numDays = new Date(year, month + 1, 0).getDate();
+
+                    // Add padding days
+                    for (let i = 0; i < firstDay; i++) {
+                        const paddingDay = document.createElement('div');
+                        paddingDay.className = 'day';
+                        calendar.appendChild(paddingDay);
+                    }
+
+                    // Add actual days
+                    for (let day = 1; day <= numDays; day++) {
+                        const dayDiv = document.createElement('div');
+                        dayDiv.className = 'day';
+                        dayDiv.innerHTML = `<strong>${day}</strong>`;
+
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.placeholder = 'Enter your notes...';
+                        input.value = localStorage.getItem(`${year}-${month}-${day}`) || '';
+                        input.onchange = () => {
+                            localStorage.setItem(`${year}-${month}-${day}`, input.value);
+                        };
+                        dayDiv.appendChild(input);
+                        calendar.appendChild(dayDiv);
+                    }
+                }
+            });
+
     </script>
 </body>
+
 </html>
