@@ -90,11 +90,14 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="calories.html">Calories</a>
         <a href="home.html">Home</a>
+        <a href="calories.html">Calories</a>
+        <a href="health-news.html">Health News</a>
         <a href="journal.html">Journal</a>
         <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
+        <a href="reminders.html">Reminders</a>
+        <a href="sleep.html">Sleep</a>
     </div>
     <div class="container">
         <div class="form-section">
@@ -167,7 +170,7 @@
 
         function convertHeight() {
             const feet = document.getElementById('heightFeet').value;
-            const inches = document.getElementById('heightInches').value;
+            the inches = document.getElementById('heightInches').value;
             const totalInches = (+feet * 12) + (+inches);
             const heightCm = (totalInches * 2.54).toFixed(2); // Convert inches to centimeters
             document.getElementById('heightCm').textContent = `${feet}'${inches}" is approximately ${heightCm} cm.`;
@@ -175,6 +178,3 @@
     </script>
 </body>
 </html>
-
-
-

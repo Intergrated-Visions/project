@@ -41,11 +41,11 @@ echo "" | sudo tee "$ssl_file" >/dev/null
 cat <<EOF | sudo tee -a "$vhost_file" >/dev/null
 <VirtualHost *:80>
     ServerAdmin admin@integratedvisions.com
-    ServerName 192.168.50.22
+    ServerName 192.168.50.10
     DocumentRoot /var/www/html
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
-    Redirect "/" "https://192.168.50.22/"
+    Redirect "/" "https://192.168.50.10/"
 </VirtualHost>
 EOF
 
@@ -54,7 +54,7 @@ cat <<EOF | sudo tee -a "$ssl_file" >/dev/null
 <IfModule mod_ssl.c>
 <VirtualHost _default_:443>
     ServerAdmin admin@integratedvisions.com
-    ServerName 192.168.50.22
+    ServerName 192.168.50.10
     DocumentRoot /var/www/html
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
