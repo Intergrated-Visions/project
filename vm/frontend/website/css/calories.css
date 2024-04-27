@@ -4,23 +4,67 @@ body {
     color: white;
 }
 
-.navbar {
-    text-align: center;
+#navbar {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2A9D8F;
+    /* Teal color picked from the image */
+    color: #ffffff;
     padding: 10px 0;
+    position: fixed;
+    /* Ensures navbar stays at the top of the page */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Higher index to keep navbar on top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for depth */
+}
+/* Navigation links */
+#navbar ul {
+    list-style-type: none;
+    /* Removes default list styles */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Aligns links in a row */
 }
 
-.navbar a {
-    color: white;
-    margin: 0 10px;
+#navbar ul li a {
+    color: #ffffff;
     text-decoration: none;
-    font-size: 18px;
-    background-color: #008080;
-    border-radius: 20px;
+    font-size: 16px;
     padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transition for hover effects */
 }
 
-.navbar a:hover {
-    background-color: #004D40;
+#navbar ul li a:hover,
+#navbar ul li a.active {
+    background-color: #264653;
+    /* Darker shade for hover effect */
+    color: #E9C46A;
+    /* Light yellow color for text to make it pop */
+    border-radius: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #navbar ul {
+        flex-direction: column;
+        /* Stack the links vertically on smaller screens */
+    }
+
+    #navbar ul li a {
+        width: 100%;
+        /* Full width for mobile navbar links */
+        padding: 15px;
+        /* Larger padding for touch targets */
+    }
 }
 
 .container {

@@ -1,116 +1,94 @@
+/* Ensure the entire webpage is covered */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 
- body {
-     font-family: Arial, sans-serif;
-     background-color: #006A4E;
-     /* Peacock color */
-     color: white;
-     margin: 0;
-     padding: 20px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     height: 100vh;
-     width: 70%;
-     margin: auto;
- }
+/* Style for the navigation bar */
+#navbar {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2A9D8F;
+    /* Teal color picked from the image */
+    color: #ffffff;
+    padding: 10px 0;
+    position: fixed;
+    /* Ensures navbar stays at the top of the page */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Higher index to keep navbar on top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for depth */
+}
 
- .navbar {
-     text-align: center;
-     width: 100%;
-     margin-bottom: 20px;
- }
+.container {
+    text-align: center;
+    padding: 20px;
+    margin: 10vh 0;
+    /* Adds top and bottom margin for breathing space */
+    max-width: 800px;
+    /* Maximum width of the container */
+    width: 100%;
+    /* Adapts to the width of the viewport */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for depth */
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Semi-transparent white for readability */
+    border-radius: 5px;
+    /* Soft rounded corners */
+}
 
- .navbar a {
-     margin: 0 15px;
-     text-decoration: none;
-     color: #FFF;
-     font-size: 18px;
-     background-color: #008080;
-     border-radius: 20px;
-     padding: 10px 20px;
- }
+/* Navigation links */
+#navbar ul {
+    list-style-type: none;
+    /* Removes default list styles */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Aligns links in a row */
+}
 
- .navbar a:hover {
-     background-color: #004D40;
- }
+#navbar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transition for hover effects */
+}
 
- #profilePic {
-     position: fixed;
-     top: 10px;
-     right: 10px;
-     width: 100px;
-     height: 100px;
-     border-radius: 50%;
-     background-size: cover;
-     background-position: center;
-     border: 3px solid #FFF;
- }
+#navbar ul li a:hover,
+#navbar ul li a.active {
+    background-color: #264653;
+    /* Darker shade for hover effect */
+    color: #E9C46A;
+    /* Light yellow color for text to make it pop */
+    border-radius: 3px;
+}
 
- .journal-entries {
-     width: 100%;
-     margin-top: 20px;
- }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #navbar ul {
+        flex-direction: column;
+        /* Stack the links vertically on smaller screens */
+    }
 
- .entry {
-     background: #008080;
-     padding: 10px;
-     border-radius: 8px;
-     margin-bottom: 10px;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-     position: relative;
- }
-
- .entry:hover {
-     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
- }
-
- .entry time {
-     font-size: 12px;
-     color: #E6E6FA;
- }
-
- .entry p {
-     margin: 5px 0;
- }
-
- .entry button {
-     position: absolute;
-     top: 5px;
-     background: #cc0000;
-     color: white;
-     border: none;
-     border-radius: 5px;
-     cursor: pointer;
- }
-
- .delete-btn {
-     right: 5px;
- }
-
- .edit-btn {
-     right: 70px;
- }
-
- textarea {
-     width: 98%;
-     height: 100px;
-     margin-bottom: 10px;
-     background-color: #014040;
-     color: white;
-     border: none;
-     padding: 10px;
-     border-radius: 5px;
- }
-
- button {
-     padding: 10px 20px;
-     background-color: #4cae4c;
-     color: white;
-     border: none;
-     border-radius: 5px;
-     cursor: pointer;
- }
-
- button:hover {
-     background-color: #408c40;
- }
+    #navbar ul li a {
+        width: 100%;
+        /* Full width for mobile navbar links */
+        padding: 15px;
+        /* Larger padding for touch targets */
+    }
+}

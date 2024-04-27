@@ -10,8 +10,41 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    display: flex;
+        justify-content: center;
+        /* Centers horizontally */
+        align-items: center;
+        /* Centers vertically */
+        height: 100vh;
+        /* Use the full height of the viewport */
+        margin: 0;
+        /* Remove default margin */
+        text-align: center;
+        /* Ensure the text within the container is centered */
+        flex-direction: column;/
+}
+/* Center the container itself if it's not already centered */
+/* Center the container itself if it's not already centered */
+.container {
+    display: flex;
+    /* Use Flexbox */
+    flex-direction: column;
+    /* Stack children vertically */
+    justify-content: center;
+    /* Center children vertically */
+    align-items: center;
+    /* Center children horizontally */
+    text-align: center;
+    /* Align the text to the center for all child elements */
+    /* Rest of your styles for .container */
 }
 
+/* If the text is within a specific element, you can target it directly */
+.welcome-message {
+    text-align: center;
+    /* This ensures the text inside is centered */
+    /* Other styling as needed */
+}
 /* Style for the navigation bar */
 #navbar {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -34,20 +67,27 @@ body {
     /* Soft shadow for depth */
 }
 .container {
-    text-align: center;
-    padding: 20px;
-    margin: 10vh 0;
-    /* Adds top and bottom margin for breathing space */
-    max-width: 800px;
-    /* Maximum width of the container */
     width: 100%;
-    /* Adapts to the width of the viewport */
+    /* This can be set to a max-width if you don't want it to stretch */
+    max-width: 900px;
+    /* Maximum width of the container */
+    padding: 20px;
+    margin: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Optional shadow for depth */
-    background-color: rgba(255, 255, 255, 0.9);
-    /* Semi-transparent white for readability */
-    border-radius: 5px;
-    /* Soft rounded corners */
+    /* Optional: Adds a subtle shadow to the container */
+    background: #fff;
+    /* Optional: Change the background color */
+    border-radius: 10px;
+    /* Optional: Rounds the corners */
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
 }
 /* Navigation links */
 #navbar ul {

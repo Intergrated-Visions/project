@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <nav class="navbar">
-        <a href="home.html">Home</a>
-        <a href="calories.html">Calories</a>
-        <a href="journal.html">Journal</a>
-        <a href="profile.html">Profile</a>
-        <a href="recommendations.html">Recommendations</a>
-    </nav>
+<div id="navbar">
+    <ul>
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="calories.html">Calories</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
     <script>
         function HandleLoginResponse(response) {
             var text = JSON.parse(response);

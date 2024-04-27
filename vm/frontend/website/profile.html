@@ -11,21 +11,20 @@
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="home.html">Home</a>
-        <a href="calories.html">Calories</a>
-        <a href="journal.html">Journal</a>
-        <a href="profile.html">Profile</a>
-        <a href="recommendations.html">Recommendations</a>
-    </div>
+<div id="navbar">
+    <ul>
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="calories.html">Calories</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
     <div class="container">
         <div class="form-section">
             <h1>Profile</h1>
             <form>
-                <label for="profilePicture">Profile Picture:</label>
-                <button type="button" onclick="document.getElementById('profilePicture').click()">Upload Picture</button>
-                <input type="file" id="profilePicture" accept="image/*" onchange="previewFile()">
-
                 <label for="fullname">Full Name:</label>
                 <input type="text" id="fullname" name="fullname">
 

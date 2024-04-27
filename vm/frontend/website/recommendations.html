@@ -9,13 +9,17 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <a href="home.html">Home</a>
-        <a href="calories.html">Calories</a>
-        <a href="journal.html">Journal</a>
-        <a href="profile.html">Profile</a>
-        <a href="recommendations.html">Recommendations</a>
-    </nav>
+    <div id="navbar">
+        <ul>
+            <li><a href="home.html" class="active">Home</a></li>
+            <li><a href="calories.html">Calories</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="recommendations.html">Recommendations</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+
     <div class="container">
         <h1>Workout Recommendations</h1>
         <p>Enter your health goal to get customized workout recommendations:</p>
@@ -45,69 +49,58 @@
     </div>
 
     <script>
-        // Event listener for the recommendations form
-        document.getElementById('recommendationsForm').addEventListener('submit', function (event) {
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('recommendationsForm').addEventListener('submit', handleRecommendationsSubmit);
+            document.getElementById('workoutForm').addEventListener('submit', handleWorkoutSubmit);
+        });
+
+        function handleRecommendationsSubmit(event) {
             event.preventDefault();
             getRecommendations();
-        });
+        }
 
-        // Event listener for the workout form
-        document.getElementById('workoutForm').addEventListener('submit', function (event) {
+        function handleWorkoutSubmit(event) {
             event.preventDefault();
             generateWorkout();
-        });
+        }
 
-        // Function to get recommendations from the PHP API
         function getRecommendations() {
-            const healthGoalElement = document.getElementById('healthGoal');
-            const healthGoal = healthGoalElement.value;
-            const recommendationsDiv = document.getElementById('recommendations');
-
+            const healthGoal = document.getElementById('healthGoal').value;
             fetch('http://localhost/backend/api/recommendations.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ goal: healthGoal })
             })
                 .then(response => response.json())
-                .then(data => {
-                    recommendationsDiv.innerHTML = `<p><strong>Recommendation:</strong> ${data.recommendation}</p>`;
-                })
-                .catch(error => {
-                    console.error('Error fetching recommendations:', error);
-                    recommendationsDiv.innerHTML = `<p><strong>Error:</strong> There was an issue getting recommendations.</p>`;
-                });
+                .then(data => updateUI(data.recommendation, 'recommendations'))
+                .catch(error => handleError(error, 'recommendations'));
         }
 
-        // Function to generate a workout plan from the PHP API
         function generateWorkout() {
-            const goalElement = document.getElementById('goal');
-            const daysElement = document.getElementById('days');
-            const durationElement = document.getElementById('duration');
-            const workoutPlanDiv = document.getElementById('workoutPlan');
-
             const workoutData = {
-                goal: goalElement.value,
-                days: daysElement.value,
-                duration: durationElement.value
+                goal: document.getElementById('goal').value,
+                days: document.getElementById('days').value,
+                duration: document.getElementById('duration').value
             };
 
             fetch('http://100.116.50.109/backend/api/recommendations.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(workoutData)
             })
                 .then(response => response.json())
-                .then(data => {
-                    workoutPlanDiv.innerHTML = data.planDescription;
-                })
-                .catch(error => {
-                    console.error('Error fetching workout plan:', error);
-                    workoutPlanDiv.innerHTML = `<p><strong>Error:</strong> There was an issue generating the workout plan.</p>`;
-                });
+                .then(data => updateUI(data.planDescription, 'workoutPlan'))
+                .catch(error => handleError(error, 'workoutPlan'));
+        }
+
+        function updateUI(content, elementId) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<p><strong>${elementId === 'recommendations' ? 'Recommendation' : 'Workout Plan'}:</strong> ${content}</p>`;
+        }
+
+        function handleError(error, elementId) {
+            console.error(`Error fetching ${elementId}:`, error);
+            document.getElementById(elementId).innerHTML = `<p><strong>Error:</strong> There was an issue getting ${elementId}.</p>`;
         }
     </script>
 </body>

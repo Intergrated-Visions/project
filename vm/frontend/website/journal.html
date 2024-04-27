@@ -7,15 +7,16 @@
     <link rel="stylesheet" type="text/css" href="css/journal.css">
 </head>
 <body>
-    <div id="profilePic" style="background-image: url('default-profile.jpg');"></div>
-    <nav class="navbar">
-        <a href="home.html">Home</a>
-        <a href="calories.html">Calories</a>
-        <a href="journal.html">Journal</a>
-        <a href="profile.html">Profile</a>
-        <a href="recommendations.html">Recommendations</a>
-    </nav>
-    <div>
+<div id="navbar">
+    <ul>
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="calories.html">Calories</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
         <textarea placeholder="Write a new journal entry..."></textarea>
         <button onclick="addEntry()">Add Entry</button>
     </div>
