@@ -14,15 +14,15 @@
 <div id="navbar">
     <ul>
         <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
         <li><a href="calories.html">Calories</a></li>
         <li><a href="journal.html">Journal</a></li>
-        <li><a href="profile.html">Profile</a></li>
+        <li><a href="bestresults.html">Journal</a></li>
         <li><a href="recommendations.html">Recommendations</a></li>
         <li><a href="register.html">Sign Up</a></li> <!-- Sign Up before Logout -->
         <li><a href="logout.php">Logout</a></li>
     </ul>
 </div>
-
     <div class="container">
         <div class="form-section">
             <h1>Profile</h1>
@@ -71,16 +71,7 @@
     </div>
 
     <script>
-        function previewFile() {
-            const file = document.getElementById('profilePicture').files[0];
-            const reader = new FileReader();
-            reader.onloadend = function () {
-                document.getElementById('profilePicPreview').src = reader.result;
-            };
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
+    
 
         function collectFormData() {
             const weightPounds = parseInt(document.getElementById('weight').value);
@@ -92,7 +83,6 @@
             const heightCm = (totalInches * 2.54).toFixed(2); // Convert inches to centimeters
 
             var formData = {
-                profilePicture: document.getElementById('profilePicture').files[0], // This will get the file object for the profile picture
                 fullName: document.getElementById('fullname').value,
                 age: parseInt(document.getElementById('age').value),
                 height: {

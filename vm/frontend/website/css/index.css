@@ -15,7 +15,7 @@ body {
     align-items: center;
     font-family: Arial, sans-serif;
     /* Or any other font you prefer */
-    background: #f7f7f7;
+    background-image: url('images/reg.gif');
     /* Optional: sets a background color for the entire page */
 }
 
