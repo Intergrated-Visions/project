@@ -7,17 +7,32 @@
 
 </head>
 <body>
-    <div id="navbar">
-        <ul>
-            <li><a href="home.html" class="active">Home</a></li>
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="calories.html">Calories</a></li>
-            <li><a href="journal.html">Journal</a></li>
-            <li><a href="bestresults.html">Journal</a></li>
-            <li><a href="recommendations.html">Recommendations</a></li>
-            <li><a href="register.html">Sign Up</a></li> <!-- Sign Up before Logout -->
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
-    </div>
+    <h1>Fetch User Profile</h1>
+    <input type="text" id="userIdInput" placeholder="Enter User ID">
+    <button onclick="fetchUserProfile()">Get Profile</button>
+    <div id="profileInfo"></div>
+
+    <script>
+        function fetchUserProfile() {
+            const userId = document.getElementById('userIdInput').value;
+            fetch('client.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: userId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('profileInfo').innerText = "Error: " + data.error;
+                    } else {
+                        document.getElementById('profileInfo').innerText = "User Name: " + data.fullName;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('profileInfo').innerText = 'Failed to fetch user profile';
+                });
+        }
+    </script>
 </body>
 </html>
