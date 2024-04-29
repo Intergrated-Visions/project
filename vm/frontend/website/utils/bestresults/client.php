@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 // Read the raw POST data from the input stream
 //$rawData = file_get_contents("php://input");
-//$data = json_decode($rawData, true);
+$data = json_decode($rawData, true);
 
 // Validate the data
 if (!isset($data["userId"])) {

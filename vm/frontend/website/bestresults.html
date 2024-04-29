@@ -1,16 +1,49 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Work regiment</title>
     <link rel="stylesheet" type="text/css" href="css/bestresult.css">
-
 </head>
+
 <body>
     <h1>Fetch User Profile</h1>
     <input type="text" id="userIdInput" placeholder="Enter User ID">
     <button onclick="fetchUserProfile()">Get Profile</button>
     <div id="profileInfo"></div>
+
+    <!-- Dropdown for selecting meals -->
+    <h2>Select Meal:</h2>
+    <select id="mealDropdown">
+        <option value="">Select a meal</option>
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="dinner">Dinner</option>
+        <option value="snack">Snack</option>
+    </select>
+
+    <!-- Dropdown for selecting workouts -->
+    <h2>Select Workout:</h2>
+    <select id="workoutDropdown">
+        <option value="">Select a workout</option>
+        <option value="cardio">Cardio</option>
+        <option value="strength">Strength Training</option>
+        <option value="flexibility">Flexibility</option>
+        <option value="balance">Balance</option>
+    </select>
+
+    <!-- Dropdown for selecting workout intensity or duration -->
+    <h2>Select Workout Intensity:</h2>
+    <select id="intensityDropdown">
+        <option value="">Select intensity/duration</option>
+        <option value="low">Low Intensity</option>
+        <option value="medium">Medium Intensity</option>
+        <option value="high">High Intensity</option>
+        <option value="30min">30 Minutes</option>
+        <option value="60min">60 Minutes</option>
+    </select>
 
     <script>
         function fetchUserProfile() {
@@ -35,4 +68,5 @@
         }
     </script>
 </body>
+
 </html>
