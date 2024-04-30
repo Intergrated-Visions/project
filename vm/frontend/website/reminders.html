@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #006A4E;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            background-color: #008080;
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #004D40;
+        }
+
+        .container {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #008080;
+            border-radius: 10px;
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        input[type="datetime-local"],
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        input[type="submit"],
+        .btn-edit,
+        .btn-delete {
+            background-color: #008080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover,
+        .btn-edit:hover,
+        .btn-delete:hover {
+            background-color: #004D40;
+        }
+
+        .reminder {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="home.html">Home</a>
+        <a href="bestresults.html">Best Results</a>
+        <a href="calories.html">Calories</a>
+        <a href="health-news.html">Health News</a>
+        <a href="journal.html">Journal</a>
+        <a href="profile.html">Profile</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="reminders.html">Reminders</a>
+        <a href="sleep.html">Sleep</a>
+    </nav>
+
+    <div class="container">
+        <h1>Create Reminder</h1>
+        <form id="reminderForm">
+            <label for="reminderText">Reminder Text:</label>
+            <input type="text" id="reminderText" name="reminderText" placeholder="Enter your reminder text">
+
+            <label for="reminderDate">Date and Time:</label>
+            <input type="datetime-local" id="reminderDate" name="reminderDate">
+
+            <input type="submit" value="Create Reminder">
+        </form>
+
+        <h1>Reminders</h1>
+        <div id="reminderList"></div>
+    </div>
+
+    <script>
+        // Function to save a reminder to local storage
+        function saveReminder(text, date) {
+            let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            const newReminder = {
+                id: new Date().getTime(), // Generate unique ID based on current time
+                text,
+                date
+            };
+            reminders.push(newReminder);
+            localStorage.setItem('reminders', JSON.stringify(reminders));
+            renderReminders();
+        }
+
+        // Function to render reminders from local storage
+        function renderReminders() {
+            const reminderList = document.getElementById('reminderList');
+            reminderList.innerHTML = '';
+            const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            reminders.forEach(reminder => {
+                const reminderDiv = document.createElement('div');
+                reminderDiv.classList.add('reminder');
+                reminderDiv.innerHTML = `
+                    <p><strong>${reminder.text}</strong> - ${new Date(reminder.date).toLocaleString()}</p>
+                    <button class="btn-edit" onclick="editReminder(${reminder.id})">Edit</button>
+                    <button class="btn-delete" onclick="deleteReminder(${reminder.id})">Delete</button>
+                `;
+                reminderList.appendChild(reminderDiv);
+                // Check if reminder time has passed and show notification
+                const reminderTime = new Date(reminder.date).getTime();
+                const currentTime = new Date().getTime();
+                if (reminderTime < currentTime) {
+                    showNotification(reminder.text);
+                }
+            });
+        }
+
+        // Function to edit a reminder
+        function editReminder(id) {
+            let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            const reminderIndex = reminders.findIndex(reminder => reminder.id === id);
+            if (reminderIndex !== -1) {
+                const updatedText = prompt('Enter new reminder text:', reminders[reminderIndex].text);
+                const updatedDate = prompt('Enter new reminder date and time:', reminders[reminderIndex].date);
+                if (updatedText !== null && updatedDate !== null) {
+                    reminders[reminderIndex].text = updatedText;
+                    reminders[reminderIndex].date = updatedDate;
+                    localStorage.setItem('reminders', JSON.stringify(reminders));
+                    renderReminders();
+                }
+            }
+        }
+
+        // Function to delete a reminder
+        function deleteReminder(id) {
+            let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            reminders = reminders.filter(reminder => reminder.id !== id);
+            localStorage.setItem('reminders', JSON.stringify(reminders));
+            renderReminders();
+        }
+
+        // Function to display notification
+        function showNotification(reminderText) {
+            if (Notification.permission === 'granted') {
+                const notification = new Notification('Reminder', {
+                    body: reminderText,
+                    icon: 'notification-icon.png'
+                });
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        const notification = new Notification('Reminder', {
+                            body: reminderText,
+                            icon: 'notification-icon.png'
+                        });
+                    }
+                });
+            }
+        }
+
+        // Submission
+        document.getElementById('reminderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const reminderText = document.getElementById('reminderText').value;
+            const reminderDate = document.getElementById('reminderDate').value;
+            saveReminder(reminderText, reminderDate);
+            document.getElementById('reminderText').value = '';
+            document.getElementById('reminderDate').value = '';
+        });
+
+        
+        renderReminders();
+    </script>
+</body>
+
+</html>

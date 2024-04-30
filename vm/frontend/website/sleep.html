@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #006A4E;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            background-color: #008080;
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #004D40;
+        }
+
+        .container {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #008080;
+            border-radius: 10px;
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100px;
+        }
+
+        input[type="submit"],
+        .btn-edit,
+        .btn-delete {
+            background-color: #008080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover,
+        .btn-edit:hover,
+        .btn-delete:hover {
+            background-color: #004D40;
+        }
+
+        .notification {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .sleep-entry {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #008080;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="home.html">Home</a>
+        <a href="bestresults.html">Best Results</a>
+        <a href="calories.html">Calories</a>
+        <a href="health-news.html">Health News</a>
+        <a href="journal.html">Journal</a>
+        <a href="profile.html">Profile</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="reminders.html">Reminders</a>
+        <a href="sleep.html">Sleep</a>
+    </nav>
+
+    <div class="container">
+        <h1>Sleep Tracker</h1>
+        <form id="sleepForm">
+            <label for="sleepDate">Date:</label>
+            <input type="date" id="sleepDate" name="sleepDate" required>
+
+            <label for="sleepHours">Hours of Sleep:</label>
+            <input type="number" id="sleepHours" name="sleepHours" min="0" max="24" required>
+
+            <input type="submit" value="Save Sleep Hours">
+        </form>
+
+        <div id="notification"></div>
+
+        <div id="sleepEntries"></div>
+    </div>
+
+    <script>
+        document.getElementById('sleepForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const sleepDate = document.getElementById('sleepDate').value;
+            const sleepHours = parseInt(document.getElementById('sleepHours').value);
+            saveSleepHours(sleepDate, sleepHours);
+        });
+
+        function saveSleepHours(date, hours) {
+            const notificationDiv = document.getElementById('notification');
+            if (hours <= 6) {
+                notificationDiv.innerHTML = '<div class="notification">Sleep is as important for good health as diet and exercise. Good sleep improves your brain performance, mood, and health. Please try and get more sleep.</div>';
+            } else {
+                notificationDiv.innerHTML = '';
+            }
+
+            const sleepEntriesDiv = document.getElementById('sleepEntries');
+            const sleepEntryDiv = document.createElement('div');
+            sleepEntryDiv.classList.add('sleep-entry');
+            sleepEntryDiv.innerHTML = `
+                <p><strong>Date:</strong> ${date}</p>
+                <p><strong>Hours of Sleep:</strong> ${hours}</p>
+                <button class="btn-edit" onclick="editSleepEntry(this)">Edit</button>
+                <button class="btn-delete" onclick="deleteSleepEntry(this)">Delete</button>
+            `;
+            sleepEntriesDiv.appendChild(sleepEntryDiv);
+
+            // Code to save sleep hours goes here
+            // You can use localStorage or any other data storage method
+        }
+
+        function editSleepEntry(button) {
+            const sleepEntryDiv = button.parentElement;
+            const date = sleepEntryDiv.querySelector('p:nth-child(1)').textContent.replace('Date: ', '');
+            const hours = sleepEntryDiv.querySelector('p:nth-child(2)').textContent.replace('Hours of Sleep: ', '');
+            document.getElementById('sleepDate').value = date;
+            document.getElementById('sleepHours').value = hours;
+            sleepEntryDiv.remove(); // Remove the edited entry
+        }
+
+        function deleteSleepEntry(button) {
+            const sleepEntryDiv = button.parentElement;
+            sleepEntryDiv.remove(); // Remove the entry
+            // Code to delete sleep entry goes here
+        }
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical News Today RSS Feed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #006A4E;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            background-color: #008080;
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #004D40;
+        }
+
+        #newsContainer {
+            margin: 20px;
+        }
+
+        .article {
+            margin-bottom: 20px;
+        }
+
+        .article h2 {
+            margin-bottom: 10px;
+        }
+
+        .article a {
+            color: #008080;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .article a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="home.html">Home</a>
+        <a href="bestresults.html">Best Results</a>
+        <a href="calories.html">Calories</a>
+        <a href="health-news.html">Health News</a>
+        <a href="journal.html">Journal</a>
+        <a href="profile.html">Profile</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="reminders.html">Reminders</a>
+        <a href="sleep.html">Sleep</a>
+    </nav>
+
+    <div id="newsContainer"></div>
+
+    <script>
+        function processNews(data) {
+            // Clear previous content
+            document.getElementById('newsContainer').innerHTML = '';
+
+            // Extract news items from the JSON data
+            data.items.forEach(item => {
+                // Create HTML elements for each news item
+                const articleDiv = document.createElement('div');
+                articleDiv.classList.add('article');
+
+                const titleHeading = document.createElement('h2');
+                titleHeading.textContent = item.title;
+
+                const summaryParagraph = document.createElement('p');
+                summaryParagraph.textContent = item.description;
+
+                const linkElement = document.createElement('a');
+                linkElement.textContent = 'Read more';
+                linkElement.href = item.link;
+                linkElement.target = '_blank';
+
+                // Append elements to the container
+                articleDiv.appendChild(titleHeading);
+                articleDiv.appendChild(summaryParagraph);
+                articleDiv.appendChild(linkElement);
+
+                document.getElementById('newsContainer').appendChild(articleDiv);
+            });
+        }
+    </script>
+    <script src="https://api.rss2json.com/v1/api.json?rss_url=https://www.medicalnewstoday.com/rss" async defer></script>
+</body>
+
+</html>

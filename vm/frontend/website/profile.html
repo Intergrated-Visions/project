@@ -1,19 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
-    <link rel="stylesheet" type="text/css" href="css/profile.css">
-
     <style>
-       
+        body {
+            background-color: #006A4E;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            background-color: #008080;
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #004D40;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .form-section {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .image-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        #profilePicPreview {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #008080;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #008080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #004D40;
+        }
+
     </style>
 </head>
+
 <body>
-<<<<<<< HEAD
     <div class="navbar">
         <a href="home.html">Home</a>
+        <a href="bestresults.html">Best Results</a>
         <a href="calories.html">Calories</a>
         <a href="health-news.html">Health News</a>
         <a href="journal.html">Journal</a>
@@ -22,21 +106,7 @@
         <a href="reminders.html">Reminders</a>
         <a href="sleep.html">Sleep</a>
     </div>
-=======
-<div id="navbar">
-    <ul>
-        <li><a href="home.html" class="active">Home</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="calories.html">Calories</a></li>
-        <li><a href="journal.html">Journal</a></li>
-        <li><a href="bestresults.html">bestresults</a></li>
-        <li><a href="recommendations.html">Recommendations</a></li>
-        <li><a href="register.html">Sign Up</a></li> <!-- Sign Up before Logout -->
-        <li><a href="logout.php">Logout</a></li>
-    </ul>
-</div>
 
->>>>>>> 410aade5ebf67293f42d9678f45e443b5ce8c283
     <div class="container">
         <div class="form-section">
             <h1>Profile</h1>
@@ -80,78 +150,31 @@
             </form>
         </div>
         <div class="image-section">
+            <label for="profilePic">Profile Picture:</label>
+            <input type="file" id="profilePic" name="profilePic" onchange="previewProfilePic(event)">
             <img id="profilePicPreview" src="path/to/default/image.jpg" alt="Profile Picture Preview">
         </div>
     </div>
 
     <script>
-    
+        function previewProfilePic(event) {
+            const preview = document.getElementById('profilePicPreview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
 
-        function collectFormData() {
-            const weightPounds = parseInt(document.getElementById('weight').value);
-            const weightKg = (weightPounds * 0.45359237).toFixed(2); // Convert pounds to kilograms
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
 
-            const feet = parseInt(document.getElementById('heightFeet').value);
-            const inches = parseInt(document.getElementById('heightInches').value);
-            const totalInches = (feet * 12) + inches;
-            const heightCm = (totalInches * 2.54).toFixed(2); // Convert inches to centimeters
-
-            var formData = {
-                fullName: document.getElementById('fullname').value,
-                age: parseInt(document.getElementById('age').value),
-                height: {
-                    feet: feet,
-                    inches: inches,
-                    centimeters: heightCm
-                },
-                weight: {
-                    pounds: weightPounds,
-                    kilograms: weightKg
-                },
-                goals: document.getElementById('goal').value,
-                dietaryRestrictions: document.getElementById('dietaryRestrictions').value,
-                about: document.getElementById('about').value
-            };
-
-            console.log(formData); // Log the data to the console for debugging
-            sendDataToServer(formData); // Function to send data to the server
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = 'path/to/default/image.jpg'; // Default image path
+            }
         }
-
-<<<<<<< HEAD
-        function convertHeight() {
-            const feet = document.getElementById('heightFeet').value;
-            the inches = document.getElementById('heightInches').value;
-            const totalInches = (+feet * 12) + (+inches);
-            const heightCm = (totalInches * 2.54).toFixed(2); // Convert inches to centimeters
-            document.getElementById('heightCm').textContent = `${feet}'${inches}" is approximately ${heightCm} cm.`;
-=======
-        function sendDataToServer(formData) {
-            // Assuming JSON data is sent (excluding file uploads):
-            formData ['type'] = 'profile'
-            fetch('/utils/profile/client.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-              .catch((error) => {
-                    console.error('Error:', error);
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-              
->>>>>>> 410aade5ebf67293f42d9678f45e443b5ce8c283
-        }
-
-        // Attach the collectFormData function to the form submit event
-        document.querySelector('form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-            collectFormData();
-        });
     </script>
 
 </body>
+
 </html>
+

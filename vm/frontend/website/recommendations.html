@@ -1,50 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Services</title>
-    <link rel="stylesheet" type="text/css" href="css/recommendations.css">
+    <style>
+        body {
+            background-color: #006A4E;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            background-color: #008080;
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #004D40;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #008080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #004D40;
+        }
+
+        #workoutPlan {
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="navbar">
         <a href="home.html">Home</a>
+        <a href="bestresults.html">Best Results</a>
         <a href="calories.html">Calories</a>
         <a href="health-news.html">Health News</a>
         <a href="journal.html">Journal</a>
         <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
-<<<<<<< HEAD
         <a href="reminders.html">Reminders</a>
         <a href="sleep.html">Sleep</a>
     </div>
-=======
-    </div> <div id="fitness-data"></div>
 
-    <script>
-        // Fetch data from the API
-        fetch('https://wger.de/api/v2/workout/', {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Token 5c1f3fe080a6ed044a465892e54c3a0068db7dad'
-          }
-        })
-        .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse the JSON response
-            })
-        .then(data => {
-                // Update the HTML content with the retrieved data
-                document.getElementById('fitness-data').innerHTML = JSON.stringify(data);
-            })
-        .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    </script>
-
->>>>>>> 410aade5ebf67293f42d9678f45e443b5ce8c283
     <div class="container">
         <h1>Workout Recommendations</h1>
         <p>Enter your health goal to get customized workout recommendations:</p>
@@ -64,9 +117,9 @@
                 <option value="increase_stamina">Increase Stamina</option>
             </select>
             <label for="days">Days per week:</label>
-            <input type="number" id="days" min="1" max="7" value="3">
+            <input type="number" id="days" min="1" max="7" placeholder="Enter days per week">
             <label for="duration">Duration (minutes):</label>
-            <input type="number" id="duration" min="10" max="120" value="60">
+            <input type="number" id="duration" min="10" max="120" placeholder="Enter duration in minutes">
             <input type="submit" value="Generate Workout">
         </form>
         <div id="workoutPlan"></div>
@@ -92,9 +145,9 @@
         function generateWorkout() {
             const goal = document.getElementById('goal').value;
             const days = document.getElementById('days').value;
-            the duration = document.getElementById('duration').value;
+            const duration = document.getElementById('duration').value;
             let planDescription = 'Here is your plan: <br>';
-            switch(goal) {
+            switch (goal) {
                 case 'lose_weight':
                     planDescription += `Perform cardio for ${duration} minutes, ${days} days a week.`;
                     break;
@@ -109,4 +162,5 @@
         }
     </script>
 </body>
+
 </html>
