@@ -1,6 +1,14 @@
 <?php
 require_once('rabbitMQLib.inc');
 
+header('Content-Type: application/json');
+
+// Read the raw POST data from the input stream
+$rawData = file_get_contents("php://input");
+
+// Decode the JSON data
+$data = json_decode($rawData, true);
+
 // Check if POST data is set
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
   $msg = "NO POST MESSAGE SET/eeeeee";
@@ -10,10 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 // Check if the required fields are present in the POST data
-if (!isset($_POST["type"]) || !isset($_POST["uname"]) || !isset($_POST["pword"])) {
+if (!isset($data["type"])) {
   $msg = "Incomplete request data";
   http_response_code(400); // Bad Request
-  echo json_encode($msg);
+  echo json_encode($data);
   exit(0);
 }
   $BROKER_HOST = "127.0.0.1"; // Default
@@ -37,32 +45,14 @@ $connectionConfig = [
 $exchangeQueueConfig = [
     "EXCHANGE_TYPE" => "topic",
     "AUTO_DELETE" => true,
-    "EXCHANGE" => "authenticationExchange", // ! TO CHANGE
-    "QUEUE" => "authenticationQueue" // ! TO CHANGE
+    "EXCHANGE" => "profileExchange", // ! TO CHANGE
+    "QUEUE" => "profileQueue" // ! TO CHANGE
 ];
 
 
 $client = new rabbitMQClient($connectionConfig, $exchangeQueueConfig);
 
-$request = array();
-$request['type'] = $_POST["type"];
-
-if(!isset($request['type']))
-{
-  return "ERROR: unsupported message type";
-}
-
-switch ($request['type'])
-{
-  case "login":
-  case "register":
-    $request['username'] = $_POST["uname"];
-    $request['password'] = $_POST["pword"];
-    break;
-
-  case "validate_session":
-    break;
-}
+$request = $data; 
 
 $response = $client->send_request($request);
 

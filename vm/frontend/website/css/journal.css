@@ -1,0 +1,123 @@
+/* Ensure the entire webpage is covered */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/reg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+        /* Centers text */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Centers children horizontally */
+    }
+/* style.css */
+#calendar {
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.day {
+    width: calc(100% / 7);
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    position: relative;
+    min-height: 100px;
+}
+
+.day input {
+    width: 100%;
+    margin-top: 10px;
+}
+/* Style for the navigation bar */
+#navbar {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2A9D8F;
+    /* Teal color picked from the image */
+    color: #ffffff;
+    padding: 10px 0;
+    position: fixed;
+    /* Ensures navbar stays at the top of the page */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Higher index to keep navbar on top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for depth */
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    margin: 10vh 0;
+    /* Adds top and bottom margin for breathing space */
+    max-width: 800px;
+    /* Maximum width of the container */
+    width: 100%;
+    /* Adapts to the width of the viewport */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for depth */
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Semi-transparent white for readability */
+    border-radius: 5px;
+    /* Soft rounded corners */
+}
+
+/* Navigation links */
+#navbar ul {
+    list-style-type: none;
+    /* Removes default list styles */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Aligns links in a row */
+}
+
+#navbar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transition for hover effects */
+}
+
+#navbar ul li a:hover,
+#navbar ul li a.active {
+    background-color: #264653;
+    /* Darker shade for hover effect */
+    color: #E9C46A;
+    /* Light yellow color for text to make it pop */
+    border-radius: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #navbar ul {
+        flex-direction: column;
+        /* Stack the links vertically on smaller screens */
+    }
+
+    #navbar ul li a {
+        width: 100%;
+        /* Full width for mobile navbar links */
+        padding: 15px;
+        /* Larger padding for touch targets */
+    }
+}

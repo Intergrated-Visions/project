@@ -1,85 +1,124 @@
+/* Reset and Basic Layout */
+html,
 body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(241, 241, 241, 0.5); /* Transparent white background */
     margin: 0;
     padding: 0;
+    height: 100%;
+    background: url('images/Mental.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar Styles */
+#navbar {
+    background-color: #2A9D8F;
+    color: #ffffff;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+#navbar ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+#navbar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#navbar ul li a:hover,
+#navbar ul li a.active {
+    background-color: #264653;
+    color: #E9C46A;
+    border-radius: 3px;
+}
+
+/* Main Container */
 .container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    width: 300px;
-    position: relative; /* Added */
-}
-
-h2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    color: #333333;
-    margin-bottom: 20px; /* Added */
+    margin-top: 100px;
+    /* Adjust if navbar height changes */
 }
 
-input[type="text"],
-input[type="password"],
-input[type="button"] {
+/* Form Styles */
+.form-container input[type="text"],
+.form-container input[type="password"],
+.form-container button,
+.form-container input[type="submit"] {
+    display: block;
+    width: 90%;
+    /* Responsive width */
+    max-width: 500px;
+    /* Maximum width of inputs */
+    padding: 10px;
+    margin: 10px auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-container label {
+    display: block;
+    margin: 10px 0;
+}
+
+/* Textarea and Select Field Styles */
+textarea,
+select {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #cccccc;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    transition: border-color 0.3s;
+    resize: vertical;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-input[type="button"] {
-    background-color: #007bff;
-    color: #ffffff;
+/* Submit Button Styles */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
     cursor: pointer;
-    font-size: 18px;
 }
 
-input[type="button"]:hover {
-    background-color: #0056b3;
+input[type="submit"]:hover {
+    background-color: #45a049;
 }
 
-.text-response {
-    margin-top: 20px;
+/* Response Message Styles */
+#textResponse {
     text-align: center;
-    color: #333333;
+    margin-top: 20px;
 }
 
-/* Added styles for images */
-.left-img,
-.right-img,
-.center-img {
-    position: absolute;
-    top: 0;
-    width: 33.33%; /* Adjusted for three images */
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #navbar ul {
+        flex-direction: column;
+    }
 
-.left-img {
-    left: 0;
-}
+    #navbar ul li a {
+        width: 100%;
+        padding: 15px;
+    }
 
-.right-img {
-    left: 33.33%; /* Moved right image to the center */
-}
-
-.center-img {
-    right: 0; /* Moved center image to the right */
+    /* Adjust textarea height for smaller devices */
+    textarea {
+        max-height: 100px;
+    }
 }

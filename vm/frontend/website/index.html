@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
     <script>
         function HandleLoginResponse(response) {
             var text = JSON.parse(response);
-            console.log(text)
+            console.log(response)
 
             document.getElementById("textResponse").innerHTML = "Response: " + text + "<p>";
             // save cookie hello
@@ -34,6 +35,8 @@
             request.open("POST", "/utils/authentication/client.php", true);
             request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             request.onreadystatechange = function () {
+                console.log('random string')
+                console.log(this)
                 console.log(this.responseText, typeof this.responseText)
                 if (this.readyState == 4 && this.status == 200) {
                     HandleLoginResponse(this.responseText);
@@ -65,6 +68,19 @@
 </head>
 
 <body>
+<div id="navbar">
+    <ul>
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="calories.html">Calories</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="bestresults.html">bestresults</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="register.html">Sign Up</a></li> <!-- Sign Up before Logout -->
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
+
     <div class="container">
        <h2>Login Form</h2>
         <form id="loginForm">
@@ -73,6 +89,7 @@
               <label for="password">Password:</label>
               <input type="password" id="password" name="password" required>
               <input type="button" value="Login" onclick="SubmitForm()">
+
       </form>
         <p id="textResponse"></p>
         <div class="company-info">

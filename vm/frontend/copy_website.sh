@@ -39,10 +39,10 @@ if [ $? -eq 0 ]; then
     fi
 
     # Move 001-sample.conf to sites-available
-    sudo mv 001-sample.conf /etc/apache2/sites-available/
+    #sudo mv 001-sample.conf /etc/apache2/sites-available/
 
     # Create symbolic link in sites-enabled
-    sudo ln -s /etc/apache2/sites-available/001-sample.conf /etc/apache2/sites-enabled/
+    #sudo ln -s /etc/apache2/sites-available/001-sample.conf /etc/apache2/sites-enabled/
     
     echo "001-sample.conf moved to sites-available and enabled."
     

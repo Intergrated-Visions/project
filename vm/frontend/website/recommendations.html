@@ -4,65 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Services</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #006A4E; 
-            color: white;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .navbar {
-            text-align: center;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .navbar a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #FFF;
-            font-size: 18px;
-            background-color: #008080; 
-            border-radius: 20px; 
-            padding: 10px 20px; 
-            transition: background-color 0.3s;
-        }
-        .navbar a:hover {
-            background-color: #004D40; 
-        }
-        .container {
-            background: #014040;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #222;
-            width: 70%;
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-top: 10px;
-        }
-        input, select, textarea {
-            padding: 8px;
-            margin-top: 5px;
-            background-color: #004d40;
-            border: 1px solid #888;
-            color: white;
-            width: 100%;
-        }
-        input[type="submit"] {
-            margin-top: 20px;
-            background-color: #008080;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #007070;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/recommendations.css">
 </head>
 <body>
     <div class="navbar">
@@ -72,9 +14,37 @@
         <a href="journal.html">Journal</a>
         <a href="profile.html">Profile</a>
         <a href="recommendations.html">Recommendations</a>
+<<<<<<< HEAD
         <a href="reminders.html">Reminders</a>
         <a href="sleep.html">Sleep</a>
     </div>
+=======
+    </div> <div id="fitness-data"></div>
+
+    <script>
+        // Fetch data from the API
+        fetch('https://wger.de/api/v2/workout/', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Token 5c1f3fe080a6ed044a465892e54c3a0068db7dad'
+          }
+        })
+        .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse the JSON response
+            })
+        .then(data => {
+                // Update the HTML content with the retrieved data
+                document.getElementById('fitness-data').innerHTML = JSON.stringify(data);
+            })
+        .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
+
+>>>>>>> 410aade5ebf67293f42d9678f45e443b5ce8c283
     <div class="container">
         <h1>Workout Recommendations</h1>
         <p>Enter your health goal to get customized workout recommendations:</p>

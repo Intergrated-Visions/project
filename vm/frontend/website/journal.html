@@ -1,112 +1,16 @@
+</html>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journal</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #006A4E; /* Peacock color */
-            color: white;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            width: 70%;
-            margin: auto;
-        }
-        .navbar {
-            text-align: center;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .navbar a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #FFF;
-            font-size: 18px;
-            background-color: #008080; 
-            border-radius: 20px; 
-            padding: 10px 20px; 
-        }
-        .navbar a:hover {
-            background-color: #004D40; 
-        }
-        #profilePic {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            border: 3px solid #FFF;
-        }
-        .journal-entries {
-            width: 100%;
-            margin-top: 20px;
-        }
-        .entry {
-            background: #008080;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            position: relative;
-        }
-        .entry:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .entry time {
-            font-size: 12px;
-            color: #E6E6FA;
-        }
-        .entry p {
-            margin: 5px 0;
-        }
-        .entry button {
-            position: absolute;
-            top: 5px;
-            background: #cc0000;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .delete-btn {
-            right: 5px;
-        }
-        .edit-btn {
-            right: 70px;
-        }
-        textarea {
-            width: 98%;
-            height: 100px;
-            margin-bottom: 10px;
-            background-color: #014040;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4cae4c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #408c40;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/journal.css">
 </head>
+
 <body>
+<<<<<<< HEAD
     <div id="profilePic" style="background-image: url('default-profile.jpg');"></div>
     <div class="navbar">
         <a href="home.html">Home</a>
@@ -117,15 +21,90 @@
         <a href="recommendations.html">Recommendations</a>
         <a href="reminders.html">Reminders</a>
         <a href="sleep.html">Sleep</a>
+=======
+<div id="navbar">
+    <ul>
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="calories.html">Calories</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="bestresults.html">bestresults</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="register.html">Sign Up</a></li> <!-- Sign Up before Logout -->
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
+
+<div id="calendar"></div>
+
+
+    <div class="goal-setting-container">
+        <input type="text" id="weeklyGoalInput" placeholder="Set your weekly goal">
+        <button onclick="setWeeklyGoal()">Set Weekly Goal</button>
+>>>>>>> 410aade5ebf67293f42d9678f45e443b5ce8c283
     </div>
-    <div>
-        <textarea placeholder="Write a new journal entry..."></textarea>
-        <button onclick="addEntry()">Add Entry</button>
+
+    <div class="journal-container">
+        <textarea id="journalEntry" placeholder="Write a new journal entry..."></textarea>
+        <button onclick="addJournalEntry()">Add Entry</button>
     </div>
-    <div class="journal-entries"></div>
+
+    <div id="goalsList"></div>
 
     <script>
+<<<<<<< HEAD
         
+=======
+        // calendar.js
+            document.addEventListener('DOMContentLoaded', () => {
+                const calendar = document.getElementById('calendar');
+                const now = new Date();
+                createCalendar(now.getFullYear(), now.getMonth());
+
+                function createCalendar(year, month) {
+                    calendar.innerHTML = ''; // Clear previous calendar
+
+                    // Adding day labels
+                    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    days.forEach(day => {
+                        const dayLabel = document.createElement('div');
+                        dayLabel.className = 'day label';
+                        dayLabel.textContent = day;
+                        calendar.appendChild(dayLabel);
+                    });
+
+                    // Calculate days for calendar
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const numDays = new Date(year, month + 1, 0).getDate();
+
+                    // Add padding days
+                    for (let i = 0; i < firstDay; i++) {
+                        const paddingDay = document.createElement('div');
+                        paddingDay.className = 'day';
+                        calendar.appendChild(paddingDay);
+                    }
+
+                    // Add actual days
+                    for (let day = 1; day <= numDays; day++) {
+                        const dayDiv = document.createElement('div');
+                        dayDiv.className = 'day';
+                        dayDiv.innerHTML = `<strong>${day}</strong>`;
+
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.placeholder = 'Enter your notes...';
+                        input.value = localStorage.getItem(`${year}-${month}-${day}`) || '';
+                        input.onchange = () => {
+                            localStorage.setItem(`${year}-${month}-${day}`, input.value);
+                        };
+                        dayDiv.appendChild(input);
+                        calendar.appendChild(dayDiv);
+                    }
+                }
+            });
+
+>>>>>>> 410aade5ebf67293f42d9678f45e443b5ce8c283
     </script>
 </body>
+
 </html>
