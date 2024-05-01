@@ -148,13 +148,13 @@
             let planDescription = 'Here is your plan: <br>';
             switch (goal) {
                 case 'lose_weight':
-                    planDescription += `Perform cardio for ${duration} minutes, ${days} days a week.`;
+                    planDescription += `Perform cardio for ${duration} minutes, ${days} days a week. Additionally, include strength training focusing on major muscle groups such as legs, back, and chest.`;
                     break;
                 case 'gain_muscle':
-                    planDescription += `Perform strength training focusing on different muscle groups, ${days} days a week.`;
+                    planDescription += `Perform strength training focusing on different muscle groups, ${days} days a week. Also, consider increasing your protein intake and ensuring sufficient rest for muscle recovery.`;
                     break;
                 case 'increase_stamina':
-                    planDescription += `Combine interval training with endurance workouts for ${duration} minutes, ${days} days a week.`;
+                    planDescription += `Combine interval training with endurance workouts for ${duration} minutes, ${days} days a week. Include activities like jogging, cycling, and swimming to build endurance.`;
                     break;
             }
             document.getElementById('workoutPlan').innerHTML = planDescription;
