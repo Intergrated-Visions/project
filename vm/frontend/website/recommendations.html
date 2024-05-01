@@ -1,165 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Services</title>
-    <style>
-        body {
-            background-color: #006A4E;
-            font-family: Arial, sans-serif;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: center;
-            list-style-type: none;
-            padding: 10px 0;
-        }
-
-        .navbar a {
-            background-color: #008080;
-            color: white;
-            margin: 0 5px;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .navbar a:hover {
-            background-color: #004D40;
-        }
-
-        .container {
-            margin: 20px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            margin-top: 5px;
-        }
-
-        input[type="submit"] {
-            background-color: #008080;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #004D40;
-        }
-
-        #workoutPlan {
-            margin-top: 20px;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Saira+Stencil+One&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Special+Elite&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script defer src="./assets/javascript/script.js"></script>
+    <title>DSbot - Generator</title>
 </head>
-
-<body>
-    <div class="navbar">
-        <a href="home.html">Home</a>
-        <a href="calories.html">Calories</a>
-        <a href="health-news.html">Health News</a>
-        <a href="journal.html">Journal</a>
-        <a href="profile.html">Profile</a>
-        <a href="recommendations.html">Recommendations</a>
-        <a href="reminders.html">Reminders</a>
-        <a href="sleep.html">Sleep</a>
+<body class="animate-in">
+    <div class="main-container">
+        <header>
+            <nav class="navbar">
+                <a href="home.html">Home</a>
+                <a href="calories.html">Calories</a>
+                <a href="health-news.html">Health News</a>
+                <a href="journal.html">Journal</a>
+                <a href="profile.html">Profile</a>
+                <a href="recommendations.html">Recommendations</a>
+                <a href="reminders.html">Reminders</a>
+                <a href="sleep.html">Sleep</a>
+            </nav>
+        </header>
+        <main class="content-container">
+            <div class="content-form">
+                <select class="select-musclegroup"></select>
+                <label for="checkbox"><input type="checkbox" id="equipment" name="equipment" /> No equipment</label>
+                <button class="get-exercise">Get Exercise</button>
+            </div>
+            <section class="results-container"></section>
+        </main>
+      
     </div>
-
-    <div class="container">
-        <h1>Workout Recommendations</h1>
-        <p>Enter your health goal to get customized workout recommendations:</p>
-        <form onsubmit="getRecommendations(); return false;">
-            <label for="healthGoal">Your Health Goal:</label>
-            <textarea id="healthGoal" name="healthGoal" rows="2" placeholder="e.g., Lose weight, gain muscle, improve stamina..."></textarea>
-            <input type="submit" value="Get Recommendations">
-        </form>
-        <div id="recommendations"></div>
-
-        <h1>Workout Generator</h1>
-        <form onsubmit="generateWorkout(); return false;">
-            <label for="goal">Fitness Goal:</label>
-            <select id="goal">
-                <option value="lose_weight">Lose Weight</option>
-                <option value="gain_muscle">Gain Muscle</option>
-                <option value="increase_stamina">Increase Stamina</option>
-            </select>
-            <label for="days">Days per week:</label>
-            <input type="number" id="days" min="1" max="7" placeholder="Enter days per week">
-            <label for="duration">Duration (minutes):</label>
-            <input type="number" id="duration" min="1" max="1000" placeholder="Enter duration in minutes">
-            <input type="submit" value="Generate Workout">
-        </form>
-        <div id="workoutPlan"></div>
-    </div>
-
     <script>
-        function getRecommendations() {
-            const healthGoal = document.getElementById('healthGoal').value.toLowerCase();
-            const recommendations = document.getElementById('recommendations');
-            let recommendationText = '';
-            if (healthGoal.includes('lose weight')) {
-                recommendationText = 'We recommend high-intensity interval training (HIIT), along with weekly strength training sessions.';
-            } else if (healthGoal.includes('gain muscle')) {
-                recommendationText = 'Focus on strength training with weights, increasing the weight and lowering the reps over time.';
-            } else if (healthGoal.includes('improve stamina')) {
-                recommendationText = 'Incorporate long-distance running, cycling, and swimming into your routine.';
-            } else {
-                recommendationText = 'Please provide a specific goal to get the best tailored recommendations.';
-            }
-            recommendations.innerHTML = `<p><strong>Recommendation:</strong> ${recommendationText}</p>`;
-        }
-
-        function generateWorkout() {
-            const goal = document.getElementById('goal').value;
-            const days = document.getElementById('days').value;
-            const duration = document.getElementById('duration').value;
-            let planDescription = 'Here is your plan: <br>';
-            switch (goal) {
-                case 'lose_weight':
-                    planDescription += `Perform cardio for ${duration} minutes, ${days} days a week. Additionally, include strength training focusing on major muscle groups such as legs, back, and chest.`;
-                    break;
-                case 'gain_muscle':
-                    planDescription += `Perform strength training focusing on different muscle groups, ${days} days a week. Also, consider increasing your protein intake and ensuring sufficient rest for muscle recovery.`;
-                    break;
-                case 'increase_stamina':
-                    planDescription += `Combine interval training with endurance workouts for ${duration} minutes, ${days} days a week. Include activities like jogging, cycling, and swimming to build endurance.`;
-                    break;
-            }
-            document.getElementById('workoutPlan').innerHTML = planDescription;
-        }
+        window.addEventListener('beforeunload', function() {
+            document.body.classList.add('animate-out');
+        });
     </script>
 </body>
-
 </html>
