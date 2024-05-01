@@ -96,30 +96,6 @@
         <a href="reminders.html">Reminders</a>
         <a href="sleep.html">Sleep</a>
     </div>
-    <div id="fitness-data"></div>
-
-    <script>
-        // Fetch data from the API
-        fetch('https://wger.de/api/v2/workout/', {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Token 5c1f3fe080a6ed044a465892e54c3a0068db7dad'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-            // Update the HTML content with the retrieved data
-            document.getElementById('fitness-data').innerHTML = JSON.stringify(data);
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-    </script>
 
     <div class="container">
         <h1>Workout Recommendations</h1>
@@ -142,7 +118,7 @@
             <label for="days">Days per week:</label>
             <input type="number" id="days" min="1" max="7" placeholder="Enter days per week">
             <label for="duration">Duration (minutes):</label>
-            <input type="number" id="duration" min="10" max="1000" placeholder="Enter duration in minutes">
+            <input type="number" id="duration" min="1" max="1000" placeholder="Enter duration in minutes">
             <input type="submit" value="Generate Workout">
         </form>
         <div id="workoutPlan"></div>
