@@ -73,63 +73,59 @@
     <div id="newsContainer"></div>
 
     <script>
-        // Data for the API request
-        const data = JSON.stringify({
-            query: 'AI',
-            time_bounded: true,
-            from_date: '01/02/2021',
-            to_date: '05/06/2021',
-            location: 'us',
-            language: 'en',
-            page: 1
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = JSON.stringify({
+                query: 'AI',
+                time_bounded: true,
+                from_date: '01/02/2021',
+                to_date: '05/06/2021',
+                location: 'us',
+                language: 'en',
+                page: 1
+            });
 
-        // Create a new XMLHttpRequest
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
 
-        // Function to handle the response
-        xhr.addEventListener('readystatechange', function () {
-            if (this.readyState === this.DONE) {
-                const response = JSON.parse(this.responseText);
-                processNews(response);
+            xhr.addEventListener('readystatechange', function () {
+                if (this.readyState === this.DONE) {
+                    const response = JSON.parse(this.responseText);
+                    processNews(response);
+                }
+            });
+
+            xhr.open('POST', 'https://newsnow.p.rapidapi.com/newsv2');
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.setRequestHeader('X-RapidAPI-Key', 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097');
+            xhr.setRequestHeader('X-RapidAPI-Host', 'newsnow.p.rapidapi.com');
+            xhr.send(data);
+
+            function processNews(data) {
+                document.getElementById('newsContainer').innerHTML = '';
+
+                data.articles.forEach(article => {
+                    const articleDiv = document.createElement('div');
+                    articleDiv.classList.add('article');
+
+                    const titleHeading = document.createElement('h2');
+                    titleHeading.textContent = article.title;
+
+                    const summaryParagraph = document.createElement('p');
+                    summaryParagraph.textContent = article.summary;
+
+                    const linkElement = document.createElement('a');
+                    linkElement.textContent = 'Read more';
+                    linkElement.href = article.url;
+                    linkElement.target = '_blank';
+
+                    articleDiv.appendChild(titleHeading);
+                    articleDiv.appendChild(summaryParagraph);
+                    articleDiv.appendChild(linkElement);
+
+                    document.getElementById('newsContainer').appendChild(articleDiv);
+                });
             }
         });
-
-        // Configure and send the HTTP request
-        xhr.open('POST', 'https://newsnow.p.rapidapi.com/newsv2');
-        xhr.setRequestHeader('content-type', 'application/json');
-        xhr.setRequestHeader('X-RapidAPI-Key', 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097');
-        xhr.setRequestHeader('X-RapidAPI-Host', 'newsnow.p.rapidapi.com');
-        xhr.send(data);
-
-        function processNews(data) {
-            // Clear previous content
-            document.getElementById('newsContainer').innerHTML = '';
-
-            // Extract news items from the data
-            data.articles.forEach(article => {
-                const articleDiv = document.createElement('div');
-                articleDiv.classList.add('article');
-
-                const titleHeading = document.createElement('h2');
-                titleHeading.textContent = article.title;
-
-                const summaryParagraph = document.createElement('p');
-                summaryParagraph.textContent = article.summary;
-
-                const linkElement = document.createElement('a');
-                linkElement.textContent = 'Read more';
-                linkElement.href = article.url;
-                linkElement.target = '_blank';
-
-                articleDiv.appendChild(titleHeading);
-                articleDiv.appendChild(summaryParagraph);
-                articleDiv.appendChild(linkElement);
-
-                document.getElementById('newsContainer').appendChild(articleDiv);
-            });
-        }
     </script>
 </body>
 </html>
