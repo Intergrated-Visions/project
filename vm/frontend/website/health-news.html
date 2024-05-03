@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,7 +58,6 @@
         }
     </style>
 </head>
-
 <body>
     <nav class="navbar">
         <a href="home.html">Home</a>
@@ -75,28 +73,56 @@
     <div id="newsContainer"></div>
 
     <script>
+        // Data for the API request
+        const data = JSON.stringify({
+            query: 'AI',
+            time_bounded: true,
+            from_date: '01/02/2021',
+            to_date: '05/06/2021',
+            location: 'us',
+            language: 'en',
+            page: 1
+        });
+
+        // Create a new XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        // Function to handle the response
+        xhr.addEventListener('readystatechange', function () {
+            if (this.readyState === this.DONE) {
+                const response = JSON.parse(this.responseText);
+                processNews(response);
+            }
+        });
+
+        // Configure and send the HTTP request
+        xhr.open('POST', 'https://newsnow.p.rapidapi.com/newsv2');
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.setRequestHeader('X-RapidAPI-Key', 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097');
+        xhr.setRequestHeader('X-RapidAPI-Host', 'newsnow.p.rapidapi.com');
+        xhr.send(data);
+
         function processNews(data) {
             // Clear previous content
             document.getElementById('newsContainer').innerHTML = '';
 
-            // Extract news items from the JSON data
-            data.items.forEach(item => {
-                // Create HTML elements for each news item
+            // Extract news items from the data
+            data.articles.forEach(article => {
                 const articleDiv = document.createElement('div');
                 articleDiv.classList.add('article');
 
                 const titleHeading = document.createElement('h2');
-                titleHeading.textContent = item.title;
+                titleHeading.textContent = article.title;
 
                 const summaryParagraph = document.createElement('p');
-                summaryParagraph.textContent = item.description;
+                summaryParagraph.textContent = article.summary;
 
                 const linkElement = document.createElement('a');
                 linkElement.textContent = 'Read more';
-                linkElement.href = item.link;
+                linkElement.href = article.url;
                 linkElement.target = '_blank';
 
-                // Append elements to the container
                 articleDiv.appendChild(titleHeading);
                 articleDiv.appendChild(summaryParagraph);
                 articleDiv.appendChild(linkElement);
@@ -105,7 +131,5 @@
             });
         }
     </script>
-    <script src="https://api.rss2json.com/v1/api.json?rss_url=https://www.usnews.com/rss/health" async defer></script>
 </body>
-
 </html>
