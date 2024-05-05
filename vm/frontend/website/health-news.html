@@ -35,26 +35,119 @@
             background-color: #004D40;
         }
 
-        #newsContainer {
+        #filters {
+            background-color: #004D40;
+            padding: 20px;
             margin: 20px;
+            border-radius: 8px;
         }
 
-        .article {
-            margin-bottom: 20px;
+        #filters label {
+            color: white;
+            margin-bottom: 5px;
+            display: block;
         }
 
-        .article h2 {
+        #filters input[type="text"],
+        #filters input[type="date"],
+        #filters input[type="number"],
+        #filters button {
             margin-bottom: 10px;
         }
 
-        .article a {
+        #newsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: calc(25% - 20px); /* Adjust width for four cards per row */
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .card a {
             color: #008080;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .article a:hover {
+        .card a:hover {
             text-decoration: underline;
+        }
+
+        /* #pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#pagination button {
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#pagination button:hover {
+    background-color: #004D40;
+}
+
+#currentPage {
+    background-color: #004D40;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 20px;
+} */
+
+
+        @media screen and (max-width: 1024px) {
+            .card {
+                width: calc(33.33% - 20px); /* Adjust width for three cards per row on smaller screens */
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .card {
+                width: calc(50% - 20px); /* Adjust width for two cards per row on smaller screens */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .card {
+                width: 100%; /* Full width for single card per row on even smaller screens */
+            }
+
+            #filters {
+                margin: 10px;
+            }
         }
     </style>
 </head>
@@ -70,62 +163,131 @@
         <a href="sleep.html">Sleep</a>
     </nav>
 
+    <div id="filters">
+        <label for="query">Query:</label>
+        <input type="text" id="query" value="AI"><br>
+
+        <label for="from_date">From Date:</label>
+        <input type="date" id="from_date" value="2021-01-02"><br>
+
+        <label for="to_date">To Date:</label>
+        <input type="date" id="to_date" value="2021-05-06"><br>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" value="us"><br>
+
+        <label for="language">Language:</label>
+        <input type="text" id="language" value="en"><br>
+
+        <label for="page">Page:</label>
+        <input type="number" id="page" value="1" min="1"><br>
+
+        <button onclick="fetchNews()">Apply Filters</button>
+    </div>
+
     <div id="newsContainer"></div>
 
+    <!-- <div id="pagination">
+        <button onclick="previousPage()">Previous</button>
+        <span id="currentPage">1</span>
+        <button onclick="nextPage()">Next</button>
+    </div> -->
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        let currentPage = 1;
+
+        function formatDate(date) {
+            const [year, month, day] = date.split('-');
+            return `${month}/${day}/${year}`;
+        }
+
+        function fetchNews() {
+            const query = document.getElementById('query').value;
+            const fromDate = document.getElementById('from_date').value;
+            const toDate = document.getElementById('to_date').value;
+            const location = document.getElementById('location').value;
+            const language = document.getElementById('language').value;
+            const page = document.getElementById('page').value;
+
+            // Format date values to 'MM/DD/YYYY' for the API
+            const formattedFromDate = formatDate(fromDate);
+            const formattedToDate = formatDate(toDate);
+
             const data = JSON.stringify({
-                query: 'AI',
+                query: query,
                 time_bounded: true,
-                from_date: '01/02/2021',
-                to_date: '05/06/2021',
-                location: 'us',
-                language: 'en',
-                page: 1
+                from_date: formattedFromDate,
+                to_date: formattedToDate,
+                location: location,
+                language: language,
+                page: page
             });
 
-            const xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
+            fetch('https://newsnow.p.rapidapi.com/newsv2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-RapidAPI-Key': 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097',
+                    'X-RapidAPI-Host': 'newsnow.p.rapidapi.com'
+                },
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                processNews(data);
+                currentPage = page;
+                document.getElementById('currentPage').textContent = page;
+            })
+            .catch(error => console.error('Error:', error));
+        }
 
-            xhr.addEventListener('readystatechange', function () {
-                if (this.readyState === this.DONE) {
-                    const response = JSON.parse(this.responseText);
-                    processNews(response);
-                }
+        function processNews(data) {
+            const newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = '';
+
+            data.news.forEach(article => {
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('card');
+
+                const imageElement = document.createElement('img');
+                imageElement.src = article.top_image;
+                imageElement.alt = article.title;
+
+                const titleElement = document.createElement('h2');
+                titleElement.textContent = article.title;
+
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = article.short_description;
+
+                const linkElement = document.createElement('a');
+                linkElement.textContent = 'Read more';
+                linkElement.href = article.url;
+                linkElement.target = '_blank';
+
+                cardDiv.appendChild(imageElement);
+                cardDiv.appendChild(titleElement);
+                cardDiv.appendChild(descriptionElement);
+                cardDiv.appendChild(linkElement);
+
+                newsContainer.appendChild(cardDiv);
             });
+        }
 
-            xhr.open('POST', 'https://newsnow.p.rapidapi.com/newsv2');
-            xhr.setRequestHeader('content-type', 'application/json');
-            xhr.setRequestHeader('X-RapidAPI-Key', 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097');
-            xhr.setRequestHeader('X-RapidAPI-Host', 'newsnow.p.rapidapi.com');
-            xhr.send(data);
+        function nextPage() {
+            currentPage++;
+            document.getElementById('page').value = currentPage;
+            fetchNews();
+        }
 
-            function processNews(data) {
-                document.getElementById('newsContainer').innerHTML = '';
-
-                data.articles.forEach(article => {
-                    const articleDiv = document.createElement('div');
-                    articleDiv.classList.add('article');
-
-                    const titleHeading = document.createElement('h2');
-                    titleHeading.textContent = article.title;
-
-                    const summaryParagraph = document.createElement('p');
-                    summaryParagraph.textContent = article.summary;
-
-                    const linkElement = document.createElement('a');
-                    linkElement.textContent = 'Read more';
-                    linkElement.href = article.url;
-                    linkElement.target = '_blank';
-
-                    articleDiv.appendChild(titleHeading);
-                    articleDiv.appendChild(summaryParagraph);
-                    articleDiv.appendChild(linkElement);
-
-                    document.getElementById('newsContainer').appendChild(articleDiv);
-                });
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                document.getElementById('page').value = currentPage;
+                fetchNews();
             }
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchNews);
     </script>
 </body>
 </html>
