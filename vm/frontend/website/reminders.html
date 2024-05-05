@@ -142,7 +142,7 @@
             transform: translateX(26px);
         }
 
-        /* Rounded sliders */
+       
         .slider.round {
             border-radius: 20px;
         }
@@ -174,12 +174,6 @@
             <label for="reminderDate">Date and Time:</label>
             <input type="datetime-local" id="reminderDate" name="reminderDate">
 
-            <label class="reminder-toggle">Alert OFF</label>
-            <label class="switch">
-                <input type="checkbox" id="toggleAlert" onchange="toggleAlert()">
-                <span class="slider round"></span>
-            </label>
-
             <input type="submit" value="Create Reminder">
         </form>
 
@@ -188,7 +182,7 @@
     </div>
 
     <script>
-       
+      
         function saveReminder(text, date, notificationEnabled) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             const newReminder = {
@@ -202,7 +196,7 @@
             renderReminders();
         }
 
-       
+        
         function renderReminders() {
             const reminderList = document.getElementById('reminderList');
             reminderList.innerHTML = '';
@@ -214,17 +208,17 @@
                     <p><strong>${reminder.text}</strong> - ${new Date(reminder.date).toLocaleString()}</p>
                     <button class="btn-edit" onclick="editReminder(${reminder.id})">Edit</button>
                     <button class="btn-delete" onclick="deleteReminder(${reminder.id})">Delete</button>
-                    <label class="reminder-toggle">${reminder.notificationEnabled ? 'Alert ON' : 'Alert OFF'}</label>
-                    <label class="switch">
+                    <label class="reminder-toggle">
                         <input type="checkbox" ${reminder.notificationEnabled ? 'checked' : ''} onchange="toggleNotification(${reminder.id}, this.checked)">
                         <span class="slider round"></span>
+                        <span>${reminder.notificationEnabled ? 'Alert ON' : 'Alert OFF'}</span>
                     </label>
                 `;
                 reminderList.appendChild(reminderDiv);
             });
         }
 
-      
+       
         function editReminder(id) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             const reminderIndex = reminders.findIndex(reminder => reminder.id === id);
@@ -240,7 +234,7 @@
             }
         }
 
-      
+       
         function deleteReminder(id) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             reminders = reminders.filter(reminder => reminder.id !== id);
@@ -248,7 +242,7 @@
             renderReminders();
         }
 
-       
+        
         function toggleNotification(id, enabled) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             const reminderIndex = reminders.findIndex(reminder => reminder.id === id);
@@ -256,7 +250,7 @@
                 reminders[reminderIndex].notificationEnabled = enabled;
                 localStorage.setItem('reminders', JSON.stringify(reminders));
                 if (enabled) {
-                   
+                    
                     const reminder = reminders[reminderIndex];
                     const reminderTime = new Date(reminder.date).getTime();
                     const currentTime = new Date().getTime();
@@ -267,17 +261,6 @@
                         }, timeUntilReminder);
                     }
                 }
-            }
-        }
-
-      
-        function toggleAlert() {
-            const toggle = document.getElementById('toggleAlert');
-            const label = document.querySelector('.reminder-toggle');
-            if (toggle.checked) {
-                label.textContent = 'Alert ON';
-            } else {
-                label.textContent = 'Alert OFF';
             }
         }
 
@@ -305,11 +288,9 @@
             event.preventDefault();
             const reminderText = document.getElementById('reminderText').value;
             const reminderDate = document.getElementById('reminderDate').value;
-            const notificationEnabled = document.getElementById('toggleAlert').checked;
-            saveReminder(reminderText, reminderDate, notificationEnabled);
+            saveReminder(reminderText, reminderDate, false);
             document.getElementById('reminderText').value = '';
             document.getElementById('reminderDate').value = '';
-            document.getElementById('toggleAlert').checked = false;
         });
 
         renderReminders();
