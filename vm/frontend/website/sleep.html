@@ -137,19 +137,28 @@
                 notificationDiv.innerHTML = '';
             }
 
-            const sleepEntriesDiv = document.getElementById('sleepEntries');
-            const sleepEntryDiv = document.createElement('div');
-            sleepEntryDiv.classList.add('sleep-entry');
-            sleepEntryDiv.innerHTML = `
-                <p><strong>Date:</strong> ${date}</p>
-                <p><strong>Hours of Sleep:</strong> ${hours}</p>
-                <button class="btn-edit" onclick="editSleepEntry(this)">Edit</button>
-                <button class="btn-delete" onclick="deleteSleepEntry(this)">Delete</button>
-            `;
-            sleepEntriesDiv.appendChild(sleepEntryDiv);
+            const sleepEntries = JSON.parse(localStorage.getItem('sleepEntries')) || [];
+            const newEntry = { date: date, hours: hours };
+            sleepEntries.push(newEntry);
+            localStorage.setItem('sleepEntries', JSON.stringify(sleepEntries));
+            loadSleepEntries();
+        }
 
-            // Code to save sleep hours goes here
-            // You can use localStorage or any other data storage method
+        function loadSleepEntries() {
+            const sleepEntries = JSON.parse(localStorage.getItem('sleepEntries')) || [];
+            const sleepEntriesDiv = document.getElementById('sleepEntries');
+            sleepEntriesDiv.innerHTML = '';
+            sleepEntries.forEach(entry => {
+                const sleepEntryDiv = document.createElement('div');
+                sleepEntryDiv.classList.add('sleep-entry');
+                sleepEntryDiv.innerHTML = `
+                    <p><strong>Date:</strong> ${entry.date}</p>
+                    <p><strong>Hours of Sleep:</strong> ${entry.hours}</p>
+                    <button class="btn-edit" onclick="editSleepEntry(this)">Edit</button>
+                    <button class="btn-delete" onclick="deleteSleepEntry(this)">Delete</button>
+                `;
+                sleepEntriesDiv.appendChild(sleepEntryDiv);
+            });
         }
 
         function editSleepEntry(button) {
@@ -158,14 +167,25 @@
             const hours = sleepEntryDiv.querySelector('p:nth-child(2)').textContent.replace('Hours of Sleep: ', '');
             document.getElementById('sleepDate').value = date;
             document.getElementById('sleepHours').value = hours;
-            sleepEntryDiv.remove(); // Remove the edited entry
+            sleepEntryDiv.remove(); 
         }
 
         function deleteSleepEntry(button) {
             const sleepEntryDiv = button.parentElement;
-            sleepEntryDiv.remove(); // Remove the entry
-            // Code to delete sleep entry goes here
+            sleepEntryDiv.remove(); 
+
+           
+            const sleepEntries = JSON.parse(localStorage.getItem('sleepEntries')) || [];
+            const date = sleepEntryDiv.querySelector('p:nth-child(1)').textContent.replace('Date: ', '');
+            const indexToDelete = sleepEntries.findIndex(entry => entry.date === date);
+            if (indexToDelete !== -1) {
+                sleepEntries.splice(indexToDelete, 1);
+                localStorage.setItem('sleepEntries', JSON.stringify(sleepEntries));
+            }
         }
+
+        
+        window.onload = loadSleepEntries;
     </script>
 </body>
 
