@@ -104,6 +104,7 @@
                     '<p>' + entry + '</p>' +
                     '<p class="timestamp">Added: ' + timestamp + '</p>' +
                     '<button onclick="editJournalEntry(this)">Edit</button>' +
+                    '<button onclick="deleteJournalEntry(this)">Delete</button>' +
                     '</div>';
                 document.getElementById("journalEntries").innerHTML += journalHtml;
                 document.getElementById("journalEntry").value = ""; // Clear textarea
@@ -118,6 +119,11 @@
                 button.parentNode.querySelector(".timestamp").textContent = "Edited: " + new Date().toLocaleString();
                 saveJournalEntries();
             }
+        }
+
+        function deleteJournalEntry(button) {
+            button.parentNode.remove();
+            saveJournalEntries();
         }
 
         function saveJournalEntries() {
