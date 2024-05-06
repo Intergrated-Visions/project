@@ -1,45 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css?family=Saira+Stencil+One&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Special+Elite&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/reset.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script defer src="./assets/javascript/script.js"></script>
-    <title>DSbot - Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #006A4E;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+            background-color: #008080;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            background-color: #008080;
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #004D40;
+        }
+
+        /* Your existing CSS styles here */
+    </style>
 </head>
-<body class="animate-in">
-    <div class="main-container">
-        <header>
-            <nav class="navbar">
-                <a href="home.html">Home</a>
-                <a href="calories.html">Calories</a>
-                <a href="health-news.html">Health News</a>
-                <a href="journal.html">Journal</a>
-                <a href="profile.html">Profile</a>
-                <a href="recommendations.html">Recommendations</a>
-                <a href="reminders.html">Reminders</a>
-                <a href="sleep.html">Sleep</a>
-                <a href="logout.html">Logout</a>
-            </nav>
-        </header>
-        <main class="content-container">
-            <div class="content-form">
-                <select class="select-musclegroup"></select>
-                <label for="checkbox"><input type="checkbox" id="equipment" name="equipment" /> No equipment</label>
-                <button class="get-exercise">Get Exercise</button>
-            </div>
-            <section class="results-container"></section>
-        </main>
-      
-    </div>
+<body>
+    <nav class="navbar">
+        <a href="home.html">Home</a>
+        <a href="calories.html">Calories</a>
+        <a href="health-news.html">Health News</a>
+        <a href="journal.html">Journal</a>
+        <a href="profile.html">Profile</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="reminders.html">Reminders</a>
+        <a href="sleep.html">Sleep</a>
+        <a href="logout.html">Logout</a>
+    </nav>
+
+    <h1>Equipment Recommendations</h1>
+
+    <div id="equipmentList"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        window.addEventListener('beforeunload', function() {
-            document.body.classList.add('animate-out');
-        });
+        async function fetchRecommendations() {
+            const options = {
+                method: 'GET',
+                url: 'https://exercise-db-fitness-workout-gym.p.rapidapi.com/list/equipment',
+                headers: {
+                    'X-RapidAPI-Key': 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097',
+                    'X-RapidAPI-Host': 'exercise-db-fitness-workout-gym.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await axios(options);
+                processEquipmentList(response.data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function processEquipmentList(equipmentList) {
+            const equipmentContainer = document.getElementById('equipmentList');
+            equipmentContainer.innerHTML = '';
+
+            equipmentList.forEach(item => {
+                const equipmentDiv = document.createElement('div');
+                equipmentDiv.textContent = item.name;
+                equipmentContainer.appendChild(equipmentDiv);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchRecommendations);
     </script>
 </body>
 </html>
