@@ -146,12 +146,36 @@
 
                 <input type="submit" value="Save Profile">
                 <button type="button" onclick="editProfile()">Edit Profile</button>
+                <button type="button" onclick="deleteProfile()">Delete Profile</button>
             </form>
         </div>
         <div class="image-section">
             <label for="profilePic">Profile Picture:</label>
             <input type="file" id="profilePic" name="profilePic" onchange="previewProfilePic(event)">
             <img id="profilePicPreview" src="path/to/default/image.jpg" alt="Profile Picture Preview">
+        </div>
+    </div>
+
+    <div class="container" id="profileInfo" style="display:none;">
+        <div class="form-section">
+            <h1>Profile Information</h1>
+            <label>Full Name:</label>
+            <p id="fullnameDisplay"></p>
+            <label>Age:</label>
+            <p id="ageDisplay"></p>
+            <label>Height:</label>
+            <p id="heightDisplay"></p>
+            <label>Weight (in pounds):</label>
+            <p id="weightDisplay"></p>
+            <label>Goals:</label>
+            <p id="goalDisplay"></p>
+            <label>Dietary Restrictions:</label>
+            <p id="dietaryRestrictionsDisplay"></p>
+            <label>About Me:</label>
+            <p id="aboutDisplay"></p>
+        </div>
+        <div class="image-section">
+            <img id="profilePicDisplay" src="path/to/default/image.jpg" alt="Profile Picture">
         </div>
     </div>
 
@@ -186,12 +210,23 @@
             };
 
             localStorage.setItem('profileData', JSON.stringify(profileData));
+            updateDisplayedProfile(profileData);
+            document.getElementById('profileInfo').style.display = 'flex';
+            document.getElementById('profileForm').reset();
         }
 
-        document.getElementById('profileForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            saveProfile();
-        });
+        function updateDisplayedProfile(profileData) {
+            document.getElementById('fullnameDisplay').innerText = profileData.fullname || '';
+            document.getElementById('ageDisplay').innerText = profileData.age || '';
+            const heightFeet = profileData.heightFeet || '';
+            const heightInches = profileData.heightInches || '';
+            document.getElementById('heightDisplay').innerText = heightFeet + ' feet ' + heightInches + ' inches';
+            document.getElementById('weightDisplay').innerText = profileData.weight || '';
+            document.getElementById('goalDisplay').innerText = profileData.goal || '';
+            document.getElementById('dietaryRestrictionsDisplay').innerText = profileData.dietaryRestrictions || 'None';
+            document.getElementById('aboutDisplay').innerText = profileData.about || '';
+            document.getElementById('profilePicDisplay').src = profileData.profilePic || 'path/to/default/image.jpg';
+        }
 
         function editProfile() {
             const profileData = JSON.parse(localStorage.getItem('profileData'));
@@ -206,20 +241,24 @@
                 document.getElementById('about').value = profileData.about || '';
                 document.getElementById('profilePicPreview').src = profileData.profilePic || 'path/to/default/image.jpg';
             }
+            document.getElementById('profileInfo').style.display = 'none';
         }
+
+        function deleteProfile() {
+            localStorage.removeItem('profileData');
+            document.getElementById('profileInfo').style.display = 'none';
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            saveProfile();
+        });
 
         window.onload = function() {
             const profileData = JSON.parse(localStorage.getItem('profileData'));
             if (profileData) {
-                document.getElementById('fullname').value = profileData.fullname || '';
-                document.getElementById('age').value = profileData.age || '';
-                document.getElementById('heightFeet').value = profileData.heightFeet || '';
-                document.getElementById('heightInches').value = profileData.heightInches || '';
-                document.getElementById('weight').value = profileData.weight || '';
-                document.getElementById('goal').value = profileData.goal || '';
-                document.getElementById('dietaryRestrictions').value = profileData.dietaryRestrictions || 'none';
-                document.getElementById('about').value = profileData.about || '';
-                document.getElementById('profilePicPreview').src = profileData.profilePic || 'path/to/default/image.jpg';
+                updateDisplayedProfile(profileData);
+                document.getElementById('profileInfo').style.display = 'flex';
             }
         }
     </script>
