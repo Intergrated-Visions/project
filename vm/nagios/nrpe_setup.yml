@@ -1,0 +1,54 @@
+---
+- name: Setup Nagios NRPE Agent
+  hosts: localhost
+  become: yes
+  vars_prompt:
+    - name: ansible_ssh_user
+      prompt: "Enter SSH username"
+      private: no
+    - name: ansible_ssh_pass
+      prompt: "Enter SSH password"
+      private: yes
+    - name: ansible_sudo_pass
+      prompt: "Enter sudo password"
+      private: yes
+  vars:
+    ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+  tasks:
+    - name: Install Nagios NRPE Agent and plugins
+      apt:
+        name:
+          - nagios-nrpe-server
+          - nagios-plugins
+          - nagios-nrpe-plugin
+        state: present
+
+    - name: Configure allowed hosts in NRPE
+      lineinfile:
+        path: /etc/nagios/nrpe.cfg
+        regexp: '^allowed_hosts='
+        line: "allowed_hosts=127.0.0.1,::1,192.168.x.x"
+
+    - name: Add custom commands to NRPE
+      blockinfile:
+        path: /etc/nagios/nrpe.cfg
+        block: |
+          command[check_users]=/usr/lib/nagios/plugins/check_users -w 5 -c 10
+          command[check_load]=/usr/lib/nagios/plugins/check_load -w 15,10,5 -c 30,25,20
+
+    - name: Restart Nagios NRPE server
+      systemd:
+        name: nagios-nrpe-server
+        state: restarted
+
+    - name: Allow specific IP on port 5666 via UFW
+      ufw:
+        rule: allow
+        proto: tcp
+        from_ip: 192.168.x.27
+        port: 5666
+
+    - name: Enable UFW rule for NRPE
+      ufw:
+        rule: allow
+        port: 5666/tcp
