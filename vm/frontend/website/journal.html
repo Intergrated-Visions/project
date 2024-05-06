@@ -137,6 +137,9 @@
                 document.getElementById("journalEntries").innerHTML = savedEntries;
             }
         }
+
+        // Clear out the stuck journal entry from localStorage
+        localStorage.removeItem("journalEntries");
     </script>
 </body>
 
