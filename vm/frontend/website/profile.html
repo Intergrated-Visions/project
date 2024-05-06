@@ -90,7 +90,6 @@
         input[type="submit"]:hover {
             background-color: #004D40;
         }
-
     </style>
 </head>
 
@@ -109,7 +108,7 @@
     <div class="container">
         <div class="form-section">
             <h1>Profile</h1>
-            <form>
+            <form id="profileForm">
                 <label for="fullname">Full Name:</label>
                 <input type="text" id="fullname" name="fullname">
 
@@ -171,9 +170,44 @@
                 preview.src = 'path/to/default/image.jpg'; // Default image path
             }
         }
+
+        function saveProfile() {
+            const profileData = {
+                fullname: document.getElementById('fullname').value,
+                age: document.getElementById('age').value,
+                heightFeet: document.getElementById('heightFeet').value,
+                heightInches: document.getElementById('heightInches').value,
+                weight: document.getElementById('weight').value,
+                goal: document.getElementById('goal').value,
+                dietaryRestrictions: document.getElementById('dietaryRestrictions').value,
+                about: document.getElementById('about').value,
+                profilePic: document.getElementById('profilePicPreview').src
+            };
+
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            saveProfile();
+        });
+
+        window.onload = function() {
+            const profileData = JSON.parse(localStorage.getItem('profileData'));
+            if (profileData) {
+                document.getElementById('fullname').value = profileData.fullname || '';
+                document.getElementById('age').value = profileData.age || '';
+                document.getElementById('heightFeet').value = profileData.heightFeet || '';
+                document.getElementById('heightInches').value = profileData.heightInches || '';
+                document.getElementById('weight').value = profileData.weight || '';
+                document.getElementById('goal').value = profileData.goal || '';
+                document.getElementById('dietaryRestrictions').value = profileData.dietaryRestrictions || 'none';
+                document.getElementById('about').value = profileData.about || '';
+                document.getElementById('profilePicPreview').src = profileData.profilePic || 'path/to/default/image.jpg';
+            }
+        }
     </script>
 
 </body>
 
 </html>
-

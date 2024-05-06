@@ -107,6 +107,7 @@
                     '</div>';
                 document.getElementById("journalEntries").innerHTML += journalHtml;
                 document.getElementById("journalEntry").value = ""; // Clear textarea
+                saveJournalEntries();
             }
         }
 
@@ -115,6 +116,19 @@
             if (entry !== null) {
                 button.parentNode.firstChild.textContent = entry;
                 button.parentNode.querySelector(".timestamp").textContent = "Edited: " + new Date().toLocaleString();
+                saveJournalEntries();
+            }
+        }
+
+        function saveJournalEntries() {
+            var journalEntries = document.getElementById("journalEntries").innerHTML;
+            localStorage.setItem("journalEntries", journalEntries);
+        }
+
+        window.onload = function() {
+            var savedEntries = localStorage.getItem("journalEntries");
+            if (savedEntries) {
+                document.getElementById("journalEntries").innerHTML = savedEntries;
             }
         }
     </script>

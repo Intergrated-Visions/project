@@ -142,7 +142,6 @@
             transform: translateX(26px);
         }
 
-       
         .slider.round {
             border-radius: 20px;
         }
@@ -182,11 +181,10 @@
     </div>
 
     <script>
-      
         function saveReminder(text, date, notificationEnabled) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             const newReminder = {
-                id: new Date().getTime(), 
+                id: new Date().getTime(),
                 text,
                 date,
                 notificationEnabled
@@ -196,7 +194,6 @@
             renderReminders();
         }
 
-        
         function renderReminders() {
             const reminderList = document.getElementById('reminderList');
             reminderList.innerHTML = '';
@@ -218,7 +215,6 @@
             });
         }
 
-       
         function editReminder(id) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             const reminderIndex = reminders.findIndex(reminder => reminder.id === id);
@@ -234,15 +230,20 @@
             }
         }
 
-       
         function deleteReminder(id) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             reminders = reminders.filter(reminder => reminder.id !== id);
             localStorage.setItem('reminders', JSON.stringify(reminders));
             renderReminders();
+
+            // If there are no reminders left, delete sleep entry
+            if (reminders.length === 0) {
+                localStorage.removeItem('sleepEntries');
+                document.getElementById('sleepEntries').innerHTML = '';
+                document.getElementById('notification').innerHTML = '';
+            }
         }
 
-        
         function toggleNotification(id, enabled) {
             let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
             const reminderIndex = reminders.findIndex(reminder => reminder.id === id);
@@ -250,7 +251,6 @@
                 reminders[reminderIndex].notificationEnabled = enabled;
                 localStorage.setItem('reminders', JSON.stringify(reminders));
                 if (enabled) {
-                    
                     const reminder = reminders[reminderIndex];
                     const reminderTime = new Date(reminder.date).getTime();
                     const currentTime = new Date().getTime();
@@ -264,7 +264,6 @@
             }
         }
 
-      
         function showNotification(reminderText) {
             if (Notification.permission === 'granted') {
                 const notification = new Notification('Reminder', {
@@ -283,7 +282,6 @@
             }
         }
 
-      
         document.getElementById('reminderForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const reminderText = document.getElementById('reminderText').value;
