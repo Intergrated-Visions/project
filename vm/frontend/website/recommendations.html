@@ -37,7 +37,12 @@
             background-color: #004D40;
         }
 
-        /* Your existing CSS styles here */
+        #equipmentList {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +58,7 @@
         <a href="logout.html">Logout</a>
     </nav>
 
-    <h1>Equipment Recommendations</h1>
+    <h1>Recommendations</h1>
 
     <div id="equipmentList"></div>
 
@@ -62,15 +67,17 @@
         async function fetchRecommendations() {
             const options = {
                 method: 'GET',
-                url: 'https://exercise-db-fitness-workout-gym.p.rapidapi.com/list/equipment',
+                url: 'https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises',
+                params: {muscle: 'biceps'},
                 headers: {
                     'X-RapidAPI-Key': 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097',
-                    'X-RapidAPI-Host': 'exercise-db-fitness-workout-gym.p.rapidapi.com'
+                    'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
                 }
             };
 
             try {
-                const response = await axios(options);
+                const response = await axios.request(options);
+                console.log(response.data);
                 processEquipmentList(response.data);
             } catch (error) {
                 console.error('Error:', error);
@@ -83,7 +90,7 @@
 
             equipmentList.forEach(item => {
                 const equipmentDiv = document.createElement('div');
-                equipmentDiv.textContent = item.name;
+                equipmentDiv.textContent = item.name; // Assuming 'name' is the property containing the equipment name
                 equipmentContainer.appendChild(equipmentDiv);
             });
         }
