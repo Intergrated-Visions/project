@@ -60,15 +60,60 @@
 
     <h1>Recommendations</h1>
 
+    <!-- Filters div -->
+    <div id="filters">
+        <label for="muscle">Muscle:</label>
+        <select id="muscle">
+            <option value="">All</option>
+            <option value="abdominals">Abdominals</option>
+            <option value="abductors">Abductors</option>
+            <option value="adductors">Adductors</option>
+            <option value="biceps">Biceps</option>
+            <option value="calves">Calves</option>
+            <option value="chest">Chest</option>
+            <option value="forearms">Forearms</option>
+            <option value="glutes">Glutes</option>
+            <option value="hamstrings">Hamstrings</option>
+            <option value="lats">Lats</option>
+            <option value="lower_back">Lower Back</option>
+            <option value="middle_back">Middle Back</option>
+            <option value="neck">Neck</option>
+            <option value="quadriceps">Quadriceps</option>
+            <option value="traps">Traps</option>
+            <option value="triceps">Triceps</option>
+        </select>
+        
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+            <option value="">All</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="expert">Expert</option>
+        </select>
+        
+        <label for="offset">Offset:</label>
+        <input type="number" id="offset" value="0" min="0">
+        
+        <button onclick="fetchRecommendations()">Submit</button>
+    </div>
+
     <div id="equipmentList"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         async function fetchRecommendations() {
+            const muscle = document.getElementById('muscle').value;
+            const difficulty = document.getElementById('difficulty').value;
+            const offset = document.getElementById('offset').value;
+
             const options = {
                 method: 'GET',
                 url: 'https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises',
-                params: {muscle: 'biceps'},
+                params: {
+                    muscle: muscle,
+                    difficulty: difficulty,
+                    offset: offset
+                },
                 headers: {
                     'X-RapidAPI-Key': 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097',
                     'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
@@ -94,8 +139,6 @@
                 equipmentContainer.appendChild(equipmentDiv);
             });
         }
-
-        document.addEventListener('DOMContentLoaded', fetchRecommendations);
     </script>
 </body>
 </html>
