@@ -99,6 +99,8 @@
 
     <div id="equipmentList"></div>
 
+    <div id="recipeContainer"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         async function fetchRecommendations() {
@@ -106,7 +108,7 @@
             const difficulty = document.getElementById('difficulty').value;
             const offset = document.getElementById('offset').value;
 
-            const options = {
+            const workoutOptions = {
                 method: 'GET',
                 url: 'https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises',
                 params: {
@@ -121,11 +123,32 @@
             };
 
             try {
-                const response = await axios.request(options);
-                console.log(response.data);
-                processEquipmentList(response.data);
+                const workoutResponse = await axios.request(workoutOptions);
+                console.log(workoutResponse.data);
+                processEquipmentList(workoutResponse.data);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Workout Error:', error);
+            }
+
+            const recipeOptions = {
+                method: 'GET',
+                url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
+                params: {
+                    tags: 'vegetarian,dessert',
+                    number: '1'
+                },
+                headers: {
+                    'X-RapidAPI-Key': 'fa4f4bd1f7msh468f90fedac37fap11b823jsne3f5fe2e5097',
+                    'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const recipeResponse = await axios.request(recipeOptions);
+                console.log(recipeResponse.data);
+                processRecipe(recipeResponse.data);
+            } catch (error) {
+                console.error('Recipe Error:', error);
             }
         }
 
@@ -138,6 +161,19 @@
                 equipmentDiv.textContent = item.name; // Assuming 'name' is the property containing the equipment name
                 equipmentContainer.appendChild(equipmentDiv);
             });
+        }
+
+        function processRecipe(recipeData) {
+            const recipeContainer = document.getElementById('recipeContainer');
+            recipeContainer.innerHTML = '';
+
+            const recipeTitle = document.createElement('h2');
+            recipeTitle.textContent = 'Random Recipe';
+            recipeContainer.appendChild(recipeTitle);
+
+            const recipeDetails = document.createElement('div');
+            recipeDetails.textContent = `Name: ${recipeData.recipes[0].title}`;
+            recipeContainer.appendChild(recipeDetails);
         }
     </script>
 </body>
